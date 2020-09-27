@@ -1,0 +1,143 @@
+<!--
+    https://www.youtube.com/watch?v=UB1O30fR-EE
+    HTML Crash Course for Absolute Beginners by Brad Traversy 
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="HMTL Cheat Sheet" content="width=device-width, initial-scale=1.0">
+    <title>HMTL Cheat Sheet</title>
+</head>
+<body>
+    <a href="blog.html">Go to blog</a>
+    <!-- heading -->
+    <h1>Heading One</h1>
+    <h2>Heanring Two</h2>
+    <h3>Heanring Thre</h3>
+    <h4>Heanring Four</h4>
+    <h5>Heanring Five</h5>
+    <h6>Heanring Six</h6>
+    <!-- paragraph -->
+    <p>Lorem <a href="https://google.com" target="_blank" >ipsum dolor</a> sit amet consectetur <strong> adipisicing elit</strong>. Ducimus consectetur quia quod quibusdam soluta iusto blanditiis eos, facere, et minima aut adipisci quae molestiae iste quo, at magni reprehenderit mollitia.
+    </p>
+    <p>Lorem ipsum dolor sit amet <em>consectetur adipisicing elit</em>. Ducimus consectetur quia quod quibusdam soluta iusto blanditiis eos, facere, et minima aut adipisci quae molestiae iste quo, at magni reprehenderit mollitia.
+    </p>
+
+    <!-- lists-->
+    <!-- ul unordoned list(nav bar)/ol ordoned list-->
+    <ul>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+        <li>List item 4</li>
+    </ul>
+    <ol>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+        <li>List item 4</li>
+    </ol>
+    <!-- table
+    use table for tabular data only never for layout-->
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Honri von Castlevania</td>
+                <td>honr@caster.com</td>
+                <td>10132</td>
+            </tr>
+            <tr>
+                <td>bru Castlevania</td>
+                <td>omagad@caster.com</td>
+                <td>132</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <!-- forms
+    You can build the look of the form iwth HTML and CSS but you need js/php/py to have any functionality
+    learn about PHP regarding GET/POST -->
+    <form action="process.php" method="POST">
+        <label>First Name</label>
+        <input type="text" name="firstName" placeholder="Enter first name">
+
+        <label>Last Name</label>
+        <input type="text" name="lastName" placeholder="Enter last name">
+        <div>
+            <label>Email</label>
+            <input type="email" name="email">
+        </div>
+            <label >Message</label>
+            <textarea name="message" ></textarea>
+        <br>
+
+        <label>Gender</label>
+        <select name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>  
+            <option value="other">Other</option>
+        </select>
+        <br>
+        <div>
+            <label >Age</label>
+            <input type="number" name="age" value="30">
+        </div>
+        <br>
+        <div>
+            <label >Birthday</label>
+            <input type="date" name="birthday" >
+        </div>
+        <br>
+        <input type="submit" name="submit" value="submit">
+    </form>
+    <!-- button-->
+    <button>Click Me!</button>
+
+    <!-- images-->
+    <!-- self closing tag/ recommend css for formating pictures-->
+    <a href="images/sample.jpg">
+        <img src="images/sample.jpg" alt="reddit aww" width="200">
+    </a>
+    <!-- QUOTATIONS-->
+    <blockquote cite="http://traversymedia.com">Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, laborum.</blockquote>
+    
+    <p> The <abbr title="World Wide Web">WWW</abbr></p>
+
+    <p><cite> HTML crash course </cite> by Brad Traversy</p>
+    <div style="margin-top:500px"></div>
+</body>
+</html>
+
+
+<!-- 
+Hyper Text Markup Languages(HTML)
+    used to display and format webside - strictly presnetation no logic
+    index.html is the root of a website (e.g. https://www.something/about.html loads the about.html file)
+    tags have CSS format assigned to them by default (e.g. Margins, padding, etc.)
+    HMTL does not care about the spaces in the code as it populates the webpage tag
+---format
+    <tagname>content </tagname>
+    <br/> (self closing tag)
+---poweruser moves
+    typing the tag (h1,ul,body) without the "<" and then pressing tab will autocomplete
+---inline / block elements
+    inline: does not start on a new line takes only the width needed to display
+    block: starts on a new line/takes full width
+strong(bold) em(italic)
+
+---tag attributes
+    always placed in the start tag
+    <tagname attributename = "attributevalue"> content </tagname>
+    works with either "" or '' but former is prefered
+    key:value (e.g id="some_id")
+-->
