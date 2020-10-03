@@ -1,0 +1,5 @@
+P-values / ttest
+eigenvalues and eigenvectors
+Finish the Python book
+Redo the SQL module from MOSH
+Review the geometry concept of linear algebra
