@@ -1,11 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/henri/Documents/Lighthouse lab/Databases/w4-d2-db/miniproject3.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2642"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,8:mainaccounts"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="accounts" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="140"/><column index="2" value="83"/><column index="3" value="83"/><column index="4" value="122"/><column index="5" value="125"/><column index="6" value="117"/><column index="7" value="135"/><column index="8" value="127"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="checking_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="2" mode="0"/></sort><column_widths><column index="1" value="65"/><column index="2" value="76"/><column index="3" value="145"/><column index="4" value="116"/><column index="5" value="122"/><column index="6" value="125"/><column index="7" value="117"/><column index="8" value="135"/><column index="9" value="127"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="checking_tran" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="65"/><column index="2" value="64"/><column index="3" value="79"/><column index="4" value="113"/><column index="5" value="106"/><column index="6" value="107"/><column index="7" value="84"/><column index="8" value="84"/><column index="9" value="71"/><column index="10" value="85"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="credit_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="65"/><column index="2" value="253"/><column index="3" value="96"/><column index="4" value="107"/><column index="5" value="122"/><column index="6" value="125"/><column index="7" value="117"/><column index="8" value="135"/><column index="9" value="127"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="customer" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="102"/><column index="2" value="66"/><column index="3" value="40"/><column index="4" value="135"/><column index="5" value="105"/><column index="6" value="66"/><column index="7" value="118"/><column index="8" value="104"/><column index="9" value="93"/><column index="10" value="121"/><column index="11" value="90"/><column index="12" value="117"/><column index="14" value="118"/><column index="15" value="92"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="savings_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="1" mode="0"/></sort><column_widths><column index="1" value="65"/><column index="2" value="76"/><column index="3" value="145"/><column index="4" value="83"/><column index="5" value="122"/><column index="6" value="125"/><column index="7" value="117"/><column index="8" value="135"/><column index="9" value="127"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="savings_tran" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="65"/><column index="2" value="64"/><column index="3" value="79"/><column index="4" value="113"/><column index="5" value="106"/><column index="6" value="107"/><column index="7" value="84"/><column index="8" value="84"/><column index="9" value="71"/><column index="10" value="85"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="sqlite_sequence" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="70"/><column index="2" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="transactions" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="64"/><column index="2" value="140"/><column index="3" value="79"/><column index="4" value="113"/><column index="5" value="106"/><column index="6" value="107"/><column index="7" value="84"/><column index="8" value="84"/><column index="9" value="71"/><column index="10" value="85"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">SELECT *
-FROM savings_acct;
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="/home/henri/Documents/Lighthouse lab/lighthouse-data-notes/Week_4/w4-d2/miniproject3.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2642"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,12:maintransactions"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="accounts" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="140"/><column index="2" value="83"/><column index="3" value="122"/><column index="4" value="125"/><column index="5" value="117"/><column index="6" value="135"/><column index="7" value="127"/><column index="8" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="checking_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="76"/><column index="2" value="145"/><column index="3" value="116"/><column index="4" value="122"/><column index="5" value="125"/><column index="6" value="117"/><column index="7" value="135"/><column index="8" value="127"/><column index="9" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="checking_tran" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="10" mode="0"/></sort><column_widths><column index="1" value="64"/><column index="2" value="79"/><column index="3" value="113"/><column index="4" value="106"/><column index="5" value="107"/><column index="6" value="84"/><column index="7" value="84"/><column index="8" value="71"/><column index="9" value="85"/><column index="10" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="credit_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="171"/><column index="2" value="96"/><column index="3" value="107"/><column index="4" value="122"/><column index="5" value="125"/><column index="6" value="117"/><column index="7" value="135"/><column index="8" value="127"/><column index="9" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="credit_tran" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="10" mode="0"/></sort><column_widths><column index="1" value="64"/><column index="2" value="79"/><column index="3" value="113"/><column index="4" value="106"/><column index="5" value="107"/><column index="6" value="84"/><column index="7" value="84"/><column index="8" value="71"/><column index="9" value="85"/><column index="10" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="customer" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort><column index="15" mode="1"/></sort><column_widths><column index="1" value="65"/><column index="2" value="66"/><column index="3" value="40"/><column index="4" value="135"/><column index="5" value="105"/><column index="6" value="66"/><column index="7" value="118"/><column index="8" value="104"/><column index="9" value="93"/><column index="10" value="121"/><column index="11" value="90"/><column index="12" value="117"/><column index="14" value="118"/><column index="15" value="92"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter><filter value="30"/></global_filter></table><table schema="main" name="savings_acct" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="76"/><column index="2" value="145"/><column index="3" value="83"/><column index="4" value="122"/><column index="5" value="125"/><column index="6" value="117"/><column index="7" value="135"/><column index="8" value="127"/><column index="9" value="65"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="savings_tran" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="65"/><column index="2" value="64"/><column index="3" value="79"/><column index="4" value="113"/><column index="5" value="106"/><column index="6" value="107"/><column index="7" value="84"/><column index="8" value="84"/><column index="9" value="71"/><column index="10" value="85"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="transactions" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="64"/><column index="2" value="140"/><column index="3" value="79"/><column index="4" value="113"/><column index="5" value="106"/><column index="6" value="107"/><column index="7" value="84"/><column index="8" value="84"/><column index="9" value="71"/><column index="10" value="85"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 2">SELECT *
+FROM credit_acct cra
+LEFT JOIN credit_tran crt
+	ON cra.cust_id = crt.cust_id
+--GROUP BY acct_nbr
+-- SELECT cra.acct_nbr,
+-- crt.tran_id,
+-- crt.tran_amt
+-- FROM credit_tran crt
+-- LEFT JOIN credit_acct cra
+-- 	ON crt.cust_id = cra.cust_id</sql><sql name="SQL 6">SELECT 
+c.income,	
+c.age,
+c.years_with_bank,
+c.nbr_children,
+c.gender,
+c.marital_status,
+c.first_name,
+c.last_name,
+c.street_nbr,
+c.street_name,
+c.postal_code,
+c.city_name,	
+c.state_code,
+ca.acct_nbr AS 'checking acct num',
+ca.ending_balance AS 'checking balance',
+sa.acct_nbr AS 'saving acct num',
+sa.ending_balance AS 'saving balance',
+cra.acct_nbr AS 'credit acct num',
+cra.ending_balance AS 'credit balance',
+(IFNULL(ca.ending_balance,0) + IFNULL(sa.ending_balance,0) - IFNULL(cra.ending_balance,0) ) AS 'net worth'
 
-SELECT DISTINCT COUNT(cust_id),
- COUNT(acct_nbr)
-FROM savings_acct;
-
-SELECT *
 FROM customer c
 LEFT JOIN checking_acct ca
 	ON c.cust_id = ca.cust_id
@@ -13,7 +37,156 @@ LEFT JOIN savings_acct sa
 	ON c.cust_id = sa.cust_id
 LEFT JOIN credit_acct cra
 	ON c.cust_id = cra.cust_id
-GROUP BY c.cust_id</sql><sql name="SQL 2">SELECT *
-FROM customer c
-LEFT JOIN accounts a
-</sql><current_tab id="1"/></tab_sql></sqlb_project>
+WHERE NOT (ca.ending_balance AND sa.ending_balance AND cra.ending_balance )IS NULL;
+</sql><sql name="SQL 8">SELECT *
+FROM checking_acct ca
+LEFT JOIN customer c
+	ON ca.cust_id = c.cust_id;
+	
+SELECT *
+FROM checking_tran ct
+-- JOIN customer c
+-- 	ON ct.cust_id=c.cust_id
+JOIN checking_acct ca
+	ON ct.cust_id = ca.cust_id;
+
+
+/*
+observations
+I do not see the usage of the balance/all dates/tran code'channel as they are more for the actual functioning of the db and its ACID componene
+account_active is relevant or an internal flag?
+*/
+
+SELECT 
+ct.tran_id,
+ct.tran_amt,
+ct.principal_amt,
+ct.interest_amt,
+ca.acct_nbr,
+ca.cust_id
+FROM checking_tran ct
+JOIN checking_acct ca
+	ON ct.cust_id = ca.cust_id
+ORDER BY ca.cust_id
+-- we want to know the range of dates
+SELECT 
+	MIN(tran_date),
+	MAX(tran_date)
+FROM checking_tran
+</sql><sql name="SQL 9">SELECT 
+	crt.tran_id,
+	crt.tran_amt,
+	crt.principal_amt,
+	crt.interest_amt,
+	cra.acct_nbr,
+	cra.cust_id
+	FROM credit_tran crt
+	JOIN credit_acct cra
+		ON crt.cust_id = cra.cust_id</sql><sql name="SQL 7">
+SELECT *
+FROM transactions t; 
+
+SELECT *
+FROM transactions t 
+LEFT JOIN -- checking transactions
+(	
+	SELECT 
+	ct.tran_id,
+	ct.tran_amt,
+	ct.principal_amt,
+	ct.interest_amt,
+	ca.acct_nbr,
+	ca.cust_id
+	FROM checking_tran ct
+	JOIN checking_acct ca
+		ON ct.cust_id = ca.cust_id
+	) as ct --ct for checking_tran
+ON t.acct_nbr = ct.acct_nbr AND t.tran_id = ct.tran_id -- requires a composite key join
+LEFT JOIN -- saving transactions
+(
+	SELECT 
+	st.tran_id,
+	st.tran_amt,
+	st.principal_amt,
+	st.interest_amt,
+	sa.acct_nbr,
+	sa.cust_id
+	FROM savings_tran st
+	JOIN savings_acct sa
+		ON st.cust_id = sa.cust_id
+		) AS st --st for savings_tran
+ON t.acct_nbr = st.acct_nbr AND t.tran_id = st.tran_id
+LEFT JOIN -- credit transactions
+(
+	SELECT 
+	crt.tran_id,
+	crt.tran_amt,
+	crt.principal_amt,
+	crt.interest_amt,
+	cra.acct_nbr,
+	cra.cust_id
+	FROM credit_tran crt
+	JOIN credit_acct cra
+		ON crt.cust_id = cra.cust_id
+) AS crt
+ON t.acct_nbr = crt.acct_nbr AND t.tran_id = crt.tran_id
+/*
+ct.cust_id,
+t.acct_nbr,
+t.tran_amt,
+t.principal_amt,
+t.interest_amt,
+ct.acct_nbr,
+st.acct_nbr,
+crt.acct_nbr</sql><sql name="SQL 10">SELECT 
+coalesce(ct.cust_id, st.cust_id, crt.cust_id) as 'customer_id',
+t.acct_nbr, 
+t.tran_amt,
+t.principal_amt,
+t.interest_amt,
+ct.acct_nbr AS 'checking',
+st.acct_nbr AS 'saving',
+crt.acct_nbr AS 'credit'
+FROM transactions t 
+LEFT JOIN -- checking transactions
+(	
+	SELECT 
+	ct.tran_id,
+	ct.tran_amt, -- we actually do not even need the 3 amt#
+	ct.principal_amt, 
+	ct.interest_amt,
+	ca.acct_nbr,
+	ca.cust_id
+	FROM checking_tran ct
+	JOIN checking_acct ca
+		ON ct.cust_id = ca.cust_id
+	) as ct --ct for checking_tran
+ON t.acct_nbr = ct.acct_nbr AND t.tran_id = ct.tran_id -- requires a composite key join
+LEFT JOIN -- saving transactions
+(
+	SELECT 
+	st.tran_id,
+	st.tran_amt,
+	st.principal_amt,
+	st.interest_amt,
+	sa.acct_nbr,
+	sa.cust_id
+	FROM savings_tran st
+	JOIN savings_acct sa
+		ON st.cust_id = sa.cust_id
+		) AS st --st for savings_tran
+ON t.acct_nbr = st.acct_nbr AND t.tran_id = st.tran_id
+LEFT JOIN -- credit transactions
+(
+	SELECT 
+	crt.tran_id,
+	crt.tran_amt,
+	crt.principal_amt,
+	crt.interest_amt,
+	cra.acct_nbr,
+	cra.cust_id
+	FROM credit_tran crt
+	JOIN credit_acct cra
+		ON crt.cust_id = cra.cust_id
+) AS crt
+ON t.acct_nbr = crt.acct_nbr AND t.tran_id = crt.tran_id</sql><current_tab id="5"/></tab_sql></sqlb_project>
