@@ -65,3 +65,6 @@ def how_much_missing_data (df):
     # also the scale is from 0 to 1
     missing_data = pd.concat([total, percent,types], axis=1, keys=['Total', 'Percent','dtypes'])
     return missing_data 
+
+# PCA analysis
+# create a function that takes the df and k and spits outs all the graphs
