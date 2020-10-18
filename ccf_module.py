@@ -91,11 +91,11 @@ def unique_df_cols(data):
 
 #Second fastest iteration method
 # don't forget that the get and set takes an underscore before
-# for i in df.index:
-#     val = df._get_value(i,'Outlet_Establishment_Year')
-#     #if you want to use days years/months/days 
-#     op = dt.date.today().year - val
-#     df._set_value( i,'year_operations',op)
+for i in df.index:
+    val = df._get_value(i,'Outlet_Establishment_Year')
+    #if you want to use days years/months/days 
+    op = dt.date.today().year - val
+    df._set_value( i,'year_operations',op)
 
 ## plot cookbook
 
