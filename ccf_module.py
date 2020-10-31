@@ -48,9 +48,9 @@ def display_query(query,connection=connection):
 #Data cleaning/Feature engineering functions:
 #w3-d3 data-prep-module
 # needs to be made into a function
-for cat in catVariables.columns.tolist():
-    print(f'There are {data[cat].nunique()} unique {cat}')
-    print(f'{data[cat].unique()} \n')
+# for cat in catVariables.columns.tolist():
+#     print(f'There are {data[cat].nunique()} unique {cat}')
+#     print(f'{data[cat].unique()} \n')
 
 # missing data as a percentage of your DF    
 def how_much_missing_data (df):
@@ -68,17 +68,19 @@ def how_much_missing_data (df):
 
 
 #data exploration (peek at the unique value)
+# add argument if the user want to see the values and if so how many
 def unique_df_cols(data):    
     catVariables = data[data.dtypes[~(data.dtypes == 'float') | (data.dtypes == 'int')].index.tolist()]
     numVariables = data[data.dtypes[(data.dtypes == 'float') | (data.dtypes == 'int')].index.tolist()]
     print('Only printing the first 20 unique variables')
-    print('Categorical variables','\n')
+    print('Categorical variables --------------------------------------------','\n')
     for cat in catVariables.columns.tolist():
         print(f'There are {data[cat].nunique()} unique {cat}')
         print(f'{data[cat].unique()[:20]} \n')
-    print('Numerical variables','\n')
+    print('Numerical variables --------------------------------------------','\n')
     for num in numVariables.columns.tolist():
         print(f'There are {data[num].nunique()} unique {num}')
+        print(f'The median is  {data[num].median()}, mean {data[num].mean()}\n')
         print(f'{data[num].unique()[:20]} \n')
 
 
@@ -91,14 +93,29 @@ def unique_df_cols(data):
 
 #Second fastest iteration method
 # don't forget that the get and set takes an underscore before
-for i in df.index:
-    val = df._get_value(i,'Outlet_Establishment_Year')
-    #if you want to use days years/months/days 
-    op = dt.date.today().year - val
-    df._set_value( i,'year_operations',op)
+# for i in df.index:
+#     val = df._get_value(i,'Outlet_Establishment_Year')
+#     #if you want to use days years/months/days 
+#     op = dt.date.today().year - val
+#     df._set_value( i,'year_operations',op)
 
 ## plot cookbook
 
 ### Matplotlib
 # plt.style.use('dark_background')
 # plt.rcParams["figure.figsize"] = (12,8)
+
+# To do:
+
+
+# don't forget ToDenseTransformer after one hot encoder
+
+class ToDenseTransformer():
+    
+    # here you define the operation it should perform
+    def transform(self, X, y=None, **fit_params):
+        return X.todense()
+
+    # just return self
+    def fit(self, X, y=None, **fit_params):
+        return self
