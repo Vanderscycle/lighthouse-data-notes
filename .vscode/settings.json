@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/henri/miniconda2/envs/pyGameNN/bin/python",
+    "python.linting.enabled": true,
+    "jupyter.jupyterServerType": "local"
+}
