@@ -119,3 +119,40 @@ class ToDenseTransformer():
     # just return self
     def fit(self, X, y=None, **fit_params):
         return self
+
+def get_word(n, tokenizer):
+      for word, index in tokenizer.word_index.items():
+          if index == n:
+              return word
+      return None
+      
+def decoder(preds,eng_tokenizer):    
+    """ for w9-d4-project"""
+    preds_text = []
+    for i in preds:
+        temp = []
+        for j in range(len(i)):
+                t = get_word(i[j], eng_tokenizer)
+                if j > 0:
+                    if (t == get_word(i[j-1], eng_tokenizer)) or (t == None):
+                        temp.append('')
+                    else:
+                        temp.append(t)
+                else:
+                    if(t == None):
+                            temp.append('')
+                    else:
+                            temp.append(t) 
+
+        preds_text.append(' '.join(temp))
+    return preds_text
+    
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+# encode and pad sequences
+def encode_sequences(tokenizer, length, lines):
+         # integer encode sequences
+         seq = tokenizer.texts_to_sequences(lines)
+         # pad sequences with 0 values
+         seq = pad_sequences(seq, maxlen=length, padding='post')
+         return seq
+

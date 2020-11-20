@@ -9,7 +9,7 @@ from scrapy import signals
 from itemadapter import is_item, ItemAdapter
 
 
-class GroceryscraperSpiderMiddleware:
+class GroceryitemindexerSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
     # passed objects.
@@ -56,7 +56,7 @@ class GroceryscraperSpiderMiddleware:
         spider.logger.info('Spider opened: %s' % spider.name)
 
 
-class GroceryscraperDownloaderMiddleware:
+class GroceryitemindexerDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
     # passed objects.
@@ -101,19 +101,3 @@ class GroceryscraperDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
-
-
-import base64
-
-# Start your middleware class
-class ProxyMiddleware(object):
-    # overwrite process request
-    def process_request(self, request, spider):
-        # Set the location of the proxy
-        request.meta['proxy'] = "http://x.botproxy.net:8080"
-
-        # Use the following lines if your proxy requires authentication
-        auth_creds = "hvandersleyen+0@gmail.com:QmZu5yyqayKFUzC"
-        # setup basic authentication for the proxy
-        access_token = base64.encodestring(auth_creds)
-        request.headers['Proxy-Authorization'] = 'Basic ' + access_token

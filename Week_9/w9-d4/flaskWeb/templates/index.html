@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Deployment Tutorial 1</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+</head>
+
+<body style="background: #000;">
+ <div class="login">
+    
+    <h1>Translator</h1>
+    
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+        <!-- I did this so that I can railroad the user in giving me data-->
+        <div> <!-- YES I AM USING DIVS FOR FORMATTING! HATE ME!-->
+            <label>Chinese to English</label>
+            <input type="text" name="firstName" placeholder="老师今天是很高新认识他们">  
+                  
+        </div>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Doesn't work lol</button>
+    </form>
+
+    <img src="https://preview.redd.it/6gejj01jp0z51.jpg?width=506&auto=webp&s=3ef517f042f5fe980caf39696508bb322b67d3ea" alt="reddit aww" width="200">
+
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+
+</body>
+</html>
