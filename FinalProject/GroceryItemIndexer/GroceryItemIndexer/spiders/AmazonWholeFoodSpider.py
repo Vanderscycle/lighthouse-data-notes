@@ -1,18 +1,34 @@
 import scrapy
-from ..items import GroceryitemindexerItem
+import readline
+
 import time
+import re
 import random 
 from datetime import datetime
-
+# from the spider other file
+from ..items import GroceryitemindexerItem
 # init 
 class AmazonWholeFood(scrapy.Spider):
     # variable name required to run scrtapy crawl
     name = 'AWFSpider'
-    #
-    pageNumber = 23
+    started = False
+    pageNumber = 7
     foodSection = 'Gourmet Gifts'
-    start_urls = [f'https://www.amazon.ca/s?rh=n%3A6967215011%2Cn%3A%216967216011%2Cn%3A7351586011&page={pageNumber}&qid=1605678691&ref=lp_7351586011_pg_{pageNumber}']
+    start_urls = [f'https://www.amazon.ca/s?rh=n%3A6967215011&page={pageNumber}&qid=1605815840&ref=lp_6967215011_pg_{pageNumber}']
     
+    # def start_requests(self,response=''): <- where the issue is rn
+    #     # we want to scrape the first page
+    #     if not AmazonWholeFood.started:
+    #         AmazonWholeFood.started = True
+    #     yield {
+    #         scrapy.Request(url=AmazonWholeFood.start_urls[0] ,callback=self.parse)
+    #     }
+    #
+        # else:
+        #     catIndex = categorieUrls(response)
+        #     for k,v in catIndex.items:
+        #         print(f'key/value: {k} : {v}')
+            
     def timestampReceival(self):
         now = datetime.now()
         return  now.strftime("%m/%d/%Y, %H")
@@ -20,8 +36,13 @@ class AmazonWholeFood(scrapy.Spider):
     # eventually I'd to create a list with url + type
     
 
-    def parse(self,response):
+    def parse(self,response):# could add the category and the url 
         
+        catIndex = self.categorieUrls(response)
+        for k,v in catIndex.items():
+            print(f'key/value: {k} : {v}')
+
+
         groceryItem = GroceryitemindexerItem()
 
         # manual check that the 200 reponse returned  
@@ -56,18 +77,71 @@ class AmazonWholeFood(scrapy.Spider):
         
         # loop from page 2 to the end
         #if AmazonWholeFood.next_page is not None:
+        
         # test if
-        if AmazonWholeFood.pageNumber < 8:
+        if AmazonWholeFood.pageNumber < 3:
             AmazonWholeFood.pageNumber += 1
             next_page = 'https://www.Amazon.ca' + response.css('.a-last a::attr(href)').get()
             self.logger.info(f"{response.css('.a-last a::attr(href)').get()}")
             self.logger.info(f'-------Moving to page: {AmazonWholeFood.pageNumber} of {next_page}')
             # error above
             yield scrapy.Request(next_page,callback=self.parse)
-
+        # we scraped the entire section
         else:
-            yield AmazonWholeFood.pageNumber
+            # some program that move to another list category
+            # return start_requests(response)
+            pass
 
+
+
+
+
+    def regexFunc(self,regexText,regex):
+
+        cleanList = list()
+        for line in regexText:
+
+            z = re.search(regex, line)
+            cleanList.append(z.groups(0))
+
+        return cleanList
+
+    def categorieUrls(self,response):
+        regex = r'(?<=\/)(.+)(?=\/)'
+        
+        # This is where the error is as it returns the href
+        # doesn't return me the same regex that I 
+        #regexText = response.css('#departments li a::attr(href)').getall()
+        #print(regexText)
+        #catList = self.regexFunc(regexText,regex)
+
+        # manual way
+        catList = ['Baby-Food',
+            'Beverages',
+            'Breads-Bakery',
+            'Breakfast-Food',
+            'Candy-Chocolate',
+            'Canned-Jarred-Foods',
+            'Condiments-Pickles-Relishes',
+            'Cooking-Baking-Supplies',
+            'Dried-Beans-Grains-Rice',
+            'Dried-Fruits-Raisins',
+            'Gourmet-Gifts',
+            'Herbs-Spices-Seasonings',
+            'Home-Brewing-Winemaking',
+            'Jams-Jellies-Sweet-Spreads',
+            'Oils-Vinegars-Salad-Dressings',
+            'Packaged-Meals-Side-Dishes',
+            'Pasta-Noodles',
+            'Sauces-Gravies-Marinades',
+            'Snack-Food']
+        urlReady = [ 'https://www.Amazon.ca'+ response.css('#departments li a::attr(href)')[i].getall().pop() for i in range(len(response.css('#departments li a::attr(href)').getall()))]
+        
+        urlCategory = dict()
+        for i in range(len(urlReady)):
+
+            urlCategory[catList[i]] = urlReady[i]
+        return urlCategory
 
 # # finding a way to loop through website
 # using fetch('https://www.amazon.ca/s?rh=n%3A6967215011&page=2&qid=1605815840&ref=lp_6967215011_pg_2')

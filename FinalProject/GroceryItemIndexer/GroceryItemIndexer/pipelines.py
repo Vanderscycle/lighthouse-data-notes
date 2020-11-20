@@ -63,3 +63,7 @@ class GroceryitemindexerPipeline:
 # db.amazonWholeFood.count()
 # # drop the collection
 # db.amazonWholeFood.drop()
+
+# how to check for duplicate 
+# (maybe a nice cleanup that is automatically done at the end of the program)
+# https://stackoverflow.com/questions/13190370/how-to-remove-duplicates-based-on-a-key-in-mongodb
