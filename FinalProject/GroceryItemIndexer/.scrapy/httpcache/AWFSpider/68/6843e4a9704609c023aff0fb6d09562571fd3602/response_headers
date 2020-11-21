@@ -1,9 +1,13 @@
-Server: Server
 Content-Type: text/html
-X-Amz-Rid: FEM2ZMSWYPTRFYT86DBY
+Server: Server
+Date: Sat, 21 Nov 2020 04:27:22 GMT
+X-Amz-Rid: MMWJWX21BHJA77T59VPM
 Vary: Content-Type,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
 Last-Modified: Wed, 30 Sep 2020 23:54:00 GMT
 Etag: "760-5b0909d09d600-gzip"
 Accept-Ranges: bytes
 Content-Encoding: gzip
-Date: Sat, 21 Nov 2020 01:29:18 GMT
+X-Cache: Error from cloudfront
+Via: 1.1 d3f9b7e35643700c8f2c0d4716ce0574.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: LAX3-C4
+X-Amz-Cf-Id: 58_DYl9zTWKdAaAevPYbzL2VNZI0G4vKa10z_IEdUfnAIy3ypDlQ1w==

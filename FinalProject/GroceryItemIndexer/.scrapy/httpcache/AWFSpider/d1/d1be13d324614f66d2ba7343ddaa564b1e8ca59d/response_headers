@@ -1,12 +1,13 @@
+Content-Type: text/html
 Server: Server
-Content-Type: text/html;charset=UTF-8
-X-Amz-Rid: Z50KXN4A15Q1FV3KFWJE
-Accept-Ch: ect,rtt,downlink
-Accept-Ch-Lifetime: 86400
+Date: Sat, 21 Nov 2020 05:30:08 GMT
+X-Amz-Rid: 8HBYT9PAJ57M3ANHMVXP
+Vary: Content-Type,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
+Last-Modified: Wed, 30 Sep 2020 23:54:00 GMT
+Etag: "760-5b0909d09d600-gzip"
+Accept-Ranges: bytes
 Content-Encoding: gzip
-X-Xss-Protection: 1;
-X-Content-Type-Options: nosniff
-Vary: Accept-Encoding,User-Agent,Content-Type,X-Amazon-Wtm-Tag-SP-Search-Secured-Port-Enabled,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
-Strict-Transport-Security: max-age=47474747; includeSubDomains; preload
-X-Frame-Options: SAMEORIGIN
-Date: Sat, 21 Nov 2020 03:08:02 GMT
+X-Cache: Error from cloudfront
+Via: 1.1 26a85c7937c20b15e763990333e888f1.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: LAX3-C4
+X-Amz-Cf-Id: bbWmrB1q3Oclnpf__-NpzcBGNBq9HTzBCCXQ3SxUun3ovB_TUlVjUQ==

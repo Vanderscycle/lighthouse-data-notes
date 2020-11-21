@@ -8,18 +8,18 @@ import os
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'GroceryItemIndexer'
+#BOT_NAME = 'GroceryItemIndexer'
 
 SPIDER_MODULES = ['GroceryItemIndexer.spiders']
 NEWSPIDER_MODULE = 'GroceryItemIndexer.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT =  	'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
+USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
-
+#ROBOTSTXT_OBEY = False
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
 
@@ -82,8 +82,8 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = .5 #latency/N
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 600
+#HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 120
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
@@ -92,15 +92,20 @@ HTTPCACHE_EXPIRATION_SECS = 600
 # RETRY_TIMES = 5
 # # Retry on most error codes since proxies fail for different reasons
 # RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
-
+# Retry many times since proxies often fail
+#RETRY_TIMES = 3
+# Retry on most error codes since proxies fail for different reasons
+#RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
 
 DOWNLOADER_MIDDLEWARES = {
     # userAgent change
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    # 'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
     # proxy
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
     'GroceryItemIndexer.smartproxy_auth.ProxyMiddleware': 100,
+    # 
+    #'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
 }
 
 
@@ -108,4 +113,5 @@ DOWNLOADER_MIDDLEWARES = {
 # SMARTPROXY_PASSWORD = os.environ.get("SMARTPROXY_PASSWORD") ## Password for your user
 # SMARTPROXY_ENDPOINT = os.environ.get("SMARTPROXY_ENDPOINT") ## Endpoint you'd like to use #gate.smartproxy.com
 # SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you are using.
+
 

@@ -33,12 +33,12 @@ class GroceryitemindexerPipeline:
             self.collection = self.db['amazonWholeFood']
         
         else:
-            # we acces the db
+            # we acces the db collection
             self.collection = self.db.amazonWholeFood
 
     def process_item(self, item, spider):
 
-        # We can have issues on
+
         try:
             # insert Many requires a dict of dict. i
             self.collection.insert_one(dict(item))
@@ -47,10 +47,6 @@ class GroceryitemindexerPipeline:
         except Exception as e:
             print('\n','--- ERROR ---',e,'\n')
         # in the future 
-        
-        # it makes more sense to do it after in the shell. Let scrapy handle the collection and mongodb the cleaning
-        #self.collection.update(dict(item)) #
-        #self.db.AmazonWholeFood.createIndex({'name':1},{'spider':2},{'unique':true,'dropDups':true});
 
         for k,v in item.items():
             print(f'key/value: {k} : {v}')
@@ -67,3 +63,7 @@ class GroceryitemindexerPipeline:
 # how to check for duplicate 
 # (maybe a nice cleanup that is automatically done at the end of the program)
 # https://stackoverflow.com/questions/13190370/how-to-remove-duplicates-based-on-a-key-in-mongodb
+        
+        # it makes more sense to do it after in the shell. Let scrapy handle the collection and mongodb the cleaning
+        #self.collection.update(dict(item)) #
+        #self.db.AmazonWholeFood.createIndex({'name':1},{'spider':2},{'unique':true,'dropDups':true});

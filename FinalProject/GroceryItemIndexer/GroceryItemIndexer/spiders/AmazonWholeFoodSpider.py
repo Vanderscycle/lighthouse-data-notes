@@ -55,7 +55,7 @@ class AmazonWholeFood(scrapy.Spider):
     def start_requests(self):            
         #start_urls = ['https://www.Amazon.ca/s?i=grocery&bbn=6967216011&rh=n%3A6967215011%2Cn%3A7351088011&dc&qid=1605856107&rnid=6967216011&ref=sr_nr_n_1']
         
-        
+        AmazonWholeFood.foodSection = AmazonWholeFood.catIndex[0][1]
         yield scrapy.Request(url=AmazonWholeFood.catIndex[0][0], callback=self.parse)
             
     def parse(self,response):# could add the category and the url 
@@ -94,37 +94,45 @@ class AmazonWholeFood(scrapy.Spider):
         
 
         #delay for each robots since scrapy is asynchronous and can process up to 32 parse/spiders
-        #time.sleep(random.randint(1, 5))
+        if AmazonWholeFood.pageNumber%50 == 0:
+            self.logger.info(f'--------Long Break 3-7 minutes')
+            time.sleep(random.randint(3, 7)*60)
+        else:
+            self.logger.info(f'--------short Break 3-10 seconds')
+            time.sleep(random.randint(3, 10))
         
-
+        
         
         # skipping page 1
         if AmazonWholeFood.pageNumber == 1:
+            nextUrlAppend = response.css('#pagn :nth-child(3) a::attr(href)').get()
 
             AmazonWholeFood.pageNumber += 1
             try:
                 # try the next url that leads on page 2
 
-                next_page = 'https://www.Amazon.ca' + response.css('#pagn :nth-child(3) a::attr(href)').get()
+                next_page = 'https://www.Amazon.ca' + nextUrlAppend
 
             except Exception as e:
                 # the second page exist
                 self.logger.info(f'----could not move the second page-----------error: {e}')
-                self.logger.info(f'next link: {response.css("#pagn :nth-child(3) a::attr(href)").get()}--')
+                self.logger.info(f'next link: {nextUrlAppend}--')
                 #catIndex = self.categorieUrls(response)
                 self.changeCat(AmazonWholeFood.catIndex)
                 next_page = AmazonWholeFood.start_urls
                  
             yield scrapy.Request(next_page,callback=self.parse)
 
-
+        # possible replacement response.css('#pagn #pagnNextLink::attr(href)').getall()
 
         # loop from page 2 to the end
-        #elif ((response.css('.a-last a::attr(href)').get() is not None) and (1<AmazonWholeFood.pageNumber)):
+        
+        elif ((response.css('.a-last a::attr(href)').get() is not None) and (1<AmazonWholeFood.pageNumber)):
+            nextUrlAppend = response.css('.a-last a::attr(href)').get()
         # current test
-        elif 1 < AmazonWholeFood.pageNumber <3:
+        #elif 1 < AmazonWholeFood.pageNumber <3:
             AmazonWholeFood.pageNumber += 1
-            next_page = 'https://www.Amazon.ca' + response.css('.a-last a::attr(href)').get()
+            next_page = 'https://www.Amazon.ca' + nextUrlAppend
             self.logger.info(f'-------Moving to page: {AmazonWholeFood.pageNumber} of {next_page}')
             # error above
             requestProxy = scrapy.Request(next_page,callback=self.parse)

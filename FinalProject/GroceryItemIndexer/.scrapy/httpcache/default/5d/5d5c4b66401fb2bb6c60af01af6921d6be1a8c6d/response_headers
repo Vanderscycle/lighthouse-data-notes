@@ -1,0 +1,14 @@
+Date: Sat, 21 Nov 2020 07:21:05 GMT
+Content-Type: text/html; charset=UTF-8
+X-Powered-By: PHP/5.6.38
+Set-Cookie: ci_session=a%3A4%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%22f0f134be420e35a4f8784c26c39690a8%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A13%3A%2274.114.118.78%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A72%3A%22Mozilla%2F5.0+%28compatible%3B+Googlebot%2F2.1%3B+%2Bhttp%3A%2F%2Fwww.google.com%2Fbot.html%29%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1605943265%3B%7D02b31332ba18dad574f65c73ba963cd5; expires=Sat, 21-Nov-2020 09:21:05 GMT; Max-Age=7200; path=/
+Vary: Accept-Encoding
+X-Turbo-Charged-By: LiteSpeed
+Cf-Cache-Status: DYNAMIC
+Cf-Request-Id: 068b46a0c900003e27b812a000000001
+Expect-Ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=QdymN5Fgpfp%2FHLJ08rGS2AfGojPF6MQAELwe2RSzUZgNR0HQ7zMC5gAy%2Bhpis%2B8RpRN%2FyUyUv7muHo78cUBBIWDfIBVhLmkDE9ljdpYIFg5fNULPCh7B"}],"group":"cf-nel","max_age":604800}
+Nel: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+Cf-Ray: 5f58a6e14b083e27-EWR
+Content-Encoding: br

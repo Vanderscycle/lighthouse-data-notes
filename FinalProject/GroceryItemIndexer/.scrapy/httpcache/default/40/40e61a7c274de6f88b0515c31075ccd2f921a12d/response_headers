@@ -1,0 +1,15 @@
+Date: Sat, 21 Nov 2020 07:33:22 GMT
+Content-Type: text/html; charset=UTF-8
+X-Powered-By: PHP/5.6.38
+Set-Cookie: ci_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%225767add6a923ecc1ed5649582152db37%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A13%3A%2274.114.118.78%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A72%3A%22Mozilla%2F5.0+%28compatible%3B+Googlebot%2F2.1%3B+%2Bhttp%3A%2F%2Fwww.google.com%2Fbot.html%29%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1605944002%3Bs%3A12%3A%22search_array%22%3Ba%3A0%3A%7B%7D%7D2b32e4d309837e330aa282895f0582e8; expires=Sat, 21-Nov-2020 09:33:22 GMT; Max-Age=7200; path=/
+Set-Cookie: ci_session=a%3A5%3A%7Bs%3A10%3A%22session_id%22%3Bs%3A32%3A%225767add6a923ecc1ed5649582152db37%22%3Bs%3A10%3A%22ip_address%22%3Bs%3A13%3A%2274.114.118.78%22%3Bs%3A10%3A%22user_agent%22%3Bs%3A72%3A%22Mozilla%2F5.0+%28compatible%3B+Googlebot%2F2.1%3B+%2Bhttp%3A%2F%2Fwww.google.com%2Fbot.html%29%22%3Bs%3A13%3A%22last_activity%22%3Bi%3A1605944002%3Bs%3A12%3A%22search_array%22%3Ba%3A0%3A%7B%7D%7D2b32e4d309837e330aa282895f0582e8; expires=Sat, 21-Nov-2020 09:33:22 GMT; Max-Age=7200; path=/
+Vary: Accept-Encoding
+X-Turbo-Charged-By: LiteSpeed
+Cf-Cache-Status: DYNAMIC
+Cf-Request-Id: 068b51e07100003655222f8000000001
+Expect-Ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=DBwEbdC93e71CsdS7bfw1WhewCblOybyngUuVaMbJYXf%2BWd9t6UcQdF4%2BSkzDNKKjIOVE7BfKMZ5EyOFWNt044V%2Bjkp6zIq%2FufroVTJ6KPfqMuCIjEPU"}],"group":"cf-nel","max_age":604800}
+Nel: {"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+Cf-Ray: 5f58b8e0baa93655-LAX
+Content-Encoding: br

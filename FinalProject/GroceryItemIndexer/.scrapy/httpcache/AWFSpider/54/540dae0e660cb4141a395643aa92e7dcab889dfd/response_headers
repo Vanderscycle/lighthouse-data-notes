@@ -1,6 +1,10 @@
-Server: Server
 Content-Type: text/html
-X-Amz-Rid: FWDD79VP1P1ZER9EKEGB
+Server: Server
+Date: Sat, 21 Nov 2020 04:27:15 GMT
+X-Amz-Rid: TV90W1H7PJ3QJRH7Q3DK
 Vary: Content-Type,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
 Content-Encoding: gzip
-Date: Sat, 21 Nov 2020 01:29:17 GMT
+X-Cache: Miss from cloudfront
+Via: 1.1 d3f9b7e35643700c8f2c0d4716ce0574.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: LAX3-C4
+X-Amz-Cf-Id: JLnoY8kzStqtapz3NrdC3aCZxGg4_SnS3jMjObeyBdgABrTlmdMqkw==
