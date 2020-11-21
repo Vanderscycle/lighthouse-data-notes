@@ -1,0 +1,19 @@
+Server: Server
+Content-Type: text/html;charset=UTF-8
+X-Amz-Rid: D8R8MM7AW4VC7SJGAZ7Y
+Accept-Ch: ect,rtt,downlink
+Accept-Ch-Lifetime: 86400
+Content-Language: en-CA
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+Content-Encoding: gzip
+X-Xss-Protection: 1;
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding,User-Agent,Content-Type,X-Amazon-Wtm-Tag-SP-Search-Secured-Port-Enabled,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
+Strict-Transport-Security: max-age=47474747; includeSubDomains; preload
+X-Frame-Options: SAMEORIGIN
+Date: Sat, 21 Nov 2020 00:14:10 GMT
+Set-Cookie: session-id=141-9568084-6767059; Domain=.amazon.ca; Expires=Sun, 21-Nov-2021 00:14:10 GMT; Path=/; Secure
+Set-Cookie: session-id-time=2082787201l; Domain=.amazon.ca; Expires=Sun, 21-Nov-2021 00:14:10 GMT; Path=/; Secure
+Set-Cookie: i18n-prefs=CAD; Domain=.amazon.ca; Expires=Sun, 21-Nov-2021 00:14:10 GMT; Path=/

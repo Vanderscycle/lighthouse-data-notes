@@ -1,0 +1,19 @@
+Content-Type: text/html; charset=UTF-8
+Server: nginx/1.16.1
+Pragma: no-cache
+Cache-Control: max-age=0, must-revalidate, no-cache, no-store
+Expires: Thu, 21 Nov 2019 01:48:30 GMT
+X-Content-Type-Options: nosniff
+X-Xss-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Encoding: gzip
+X-Akamai-Transformed: 9 34061 0 pmb=mRUM,1
+Date: Sat, 21 Nov 2020 01:50:35 GMT
+Vary: Accept-Encoding
+Set-Cookie: PHPSESSID=8185jt8gagsh7pg4l1fik4b6p6; expires=Sat, 21-Nov-2020 03:50:35 GMT; Max-Age=7200; path=/; domain=www.tntsupermarket.com; secure; HttpOnly
+Set-Cookie: preferedstorecode=PR; expires=Wed, 11-Nov-2071 03:41:10 GMT; Max-Age=1608515435; path=/; secure
+Set-Cookie: location=Thornhill%2C+ON%2C+L3T; expires=Wed, 11-Nov-2071 03:41:10 GMT; Max-Age=1608515435; path=/; secure
+Server-Timing: cdn-cache; desc=MISS
+Server-Timing: edge; dur=170
+Server-Timing: origin; dur=447

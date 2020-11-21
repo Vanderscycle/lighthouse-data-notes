@@ -1,4 +1,4 @@
-
+import os
 # Scrapy settings for GroceryItemIndexer project
 #
 # For simplicity, this file contains only settings considered important or
@@ -15,7 +15,7 @@ NEWSPIDER_MODULE = 'GroceryItemIndexer.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'GroceryItemIndexer (+http://www.yourdomain.com)'
+#USER_AGENT =  	'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -28,7 +28,7 @@ ROBOTSTXT_OBEY = True
 # See also autothrottle settings and docs
 #DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+#CONCURRENT_REQUESTS_PER_DOMAIN = 1
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -82,21 +82,30 @@ AUTOTHROTTLE_TARGET_CONCURRENCY = .5 #latency/N
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
+HTTPCACHE_ENABLED = True
+HTTPCACHE_EXPIRATION_SECS = 600
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+# # Retry many times since proxies often fail
+# RETRY_TIMES = 5
+# # Retry on most error codes since proxies fail for different reasons
+# RETRY_HTTP_CODES = [500, 503, 504, 400, 403, 404, 408]
 
 
 DOWNLOADER_MIDDLEWARES = {
     # userAgent change
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
-    # RotatingProxyPool (not set yest)
-    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 410,
-    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 420,
-
+    # proxy
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+    'GroceryItemIndexer.smartproxy_auth.ProxyMiddleware': 100,
 }
-# ROTATING_PROXY_LIST_PATH = '/my/path/proxies.txt'
+
+
+# SMARTPROXY_USER = os.environ.get("SMARTPROXY_USER") ## Smartproxy Username (Sub-user)
+# SMARTPROXY_PASSWORD = os.environ.get("SMARTPROXY_PASSWORD") ## Password for your user
+# SMARTPROXY_ENDPOINT = os.environ.get("SMARTPROXY_ENDPOINT") ## Endpoint you'd like to use #gate.smartproxy.com
+# SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you are using.
+

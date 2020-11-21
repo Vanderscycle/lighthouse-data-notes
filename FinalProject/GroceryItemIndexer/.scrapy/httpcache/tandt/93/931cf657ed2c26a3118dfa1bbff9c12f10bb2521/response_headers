@@ -1,0 +1,14 @@
+Content-Type: text/plain; charset=UTF-8
+Server: nginx/1.16.1
+Last-Modified: Mon, 06 Jan 2020 03:30:57 GMT
+Etag: "5e12a9f1-123"
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Accept-Ranges: bytes
+Content-Encoding: gzip
+Cache-Control: max-age=604800
+Expires: Sat, 28 Nov 2020 02:59:43 GMT
+Date: Sat, 21 Nov 2020 02:59:43 GMT
+Vary: Accept-Encoding
+Server-Timing: cdn-cache; desc=MISS
+Server-Timing: edge; dur=33
+Server-Timing: origin; dur=27

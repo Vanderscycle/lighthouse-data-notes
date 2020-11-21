@@ -52,6 +52,7 @@ class PostsSpider(scrapy.Spider):
         #'image link' : response.css('#middleContainer #comic img').re(r'imgs.+.jpg'),
         comic['comicImageLink'] = response.css('#middleContainer #comic img::attr(src)').get()[2:]
         comic['comicHiddenText'] = response.css('#middleContainer #comic img').re(r'title="(.*?)"')
+        
         #response.css('#middleContainer #comic img::attr(title)').get()
 
         

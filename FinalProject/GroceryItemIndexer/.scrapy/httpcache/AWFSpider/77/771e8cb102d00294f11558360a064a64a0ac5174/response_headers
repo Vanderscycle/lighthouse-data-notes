@@ -1,0 +1,21 @@
+Content-Type: text/html;charset=UTF-8
+Server: Server
+Date: Fri, 20 Nov 2020 23:42:46 GMT
+X-Amz-Rid: 4RHKWK55DV3T5HE3SCAX
+Set-Cookie: session-token=gl9onlo7AJbVy2A7PBViCR/JJWcRg2guG44G2YzRWBwifdNe9/eeTTL7k0An/8vcGM981jeP6rLwPN7pCxMQJGssLJjuHsy233aODwA4Lc/Uu08PAMnDPEVN+AO5mEI3chpbbai2GEDj8oVPPnGdG3xzJ/NE1XBwCw/4PS/iLSJdtKZX9Mo0qpIZrE276Mpj; Domain=.amazon.ca; Expires=Sat, 20-Nov-2021 23:42:46 GMT; Path=/; Secure
+Accept-Ch: ect,rtt,downlink
+Accept-Ch-Lifetime: 86400
+Content-Language: en-CA
+Cache-Control: no-cache
+Pragma: no-cache
+Expires: -1
+Content-Encoding: gzip
+X-Xss-Protection: 1;
+X-Content-Type-Options: nosniff
+Vary: Accept-Encoding,User-Agent,Content-Type,X-Amazon-Wtm-Tag-SP-Search-Secured-Port-Enabled,Accept-Encoding,X-Amzn-CDN-Cache,X-Amzn-AX-Treatment,User-Agent
+Strict-Transport-Security: max-age=47474747; includeSubDomains; preload
+X-Frame-Options: SAMEORIGIN
+X-Cache: Miss from cloudfront
+Via: 1.1 0da9bec11a1bde5ca7f71b28194afd5a.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: YVR50-C1
+X-Amz-Cf-Id: 0v9V2VjB-wArOMvPbd9Z1Yi8UsZeB4jqY5T96ra3H_1uwYKhWHxuVQ==
