@@ -15,7 +15,7 @@ NEWSPIDER_MODULE = 'GroceryItemIndexer.spiders'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
+#USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -99,8 +99,8 @@ HTTPCACHE_EXPIRATION_SECS = 120
 
 DOWNLOADER_MIDDLEWARES = {
     # userAgent change
-    # 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    # 'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
     # proxy
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
     'GroceryItemIndexer.smartproxy_auth.ProxyMiddleware': 100,
@@ -109,9 +109,9 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 
-# SMARTPROXY_USER = os.environ.get("SMARTPROXY_USER") ## Smartproxy Username (Sub-user)
-# SMARTPROXY_PASSWORD = os.environ.get("SMARTPROXY_PASSWORD") ## Password for your user
-# SMARTPROXY_ENDPOINT = os.environ.get("SMARTPROXY_ENDPOINT") ## Endpoint you'd like to use #gate.smartproxy.com
-# SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you are using.
+SMARTPROXY_USER = os.environ.get("SMARTPROXY_USER") ## Smartproxy Username (Sub-user)
+SMARTPROXY_PASSWORD = os.environ.get("SMARTPROXY_PASSWORD") ## Password for your user
+SMARTPROXY_ENDPOINT = os.environ.get("SMARTPROXY_ENDPOINT") ## Endpoint you'd like to use #gate.smartproxy.com
+SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you are using.
 
 
