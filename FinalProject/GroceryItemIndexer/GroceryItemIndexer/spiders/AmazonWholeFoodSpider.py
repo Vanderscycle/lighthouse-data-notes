@@ -9,6 +9,12 @@ from ..items import GroceryitemindexerItem
 class AmazonWholeFood(scrapy.Spider):
     # variable name required to run scrtapy crawl
     name = 'AWFSpider'
+    # If you have multiple spiders that have different pipelines it is easier to have it part of the main spider.
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+    'GroceryItemIndexer.pipelines.GroceryitemindexerPipeline': 300,
+        }
+    }
 
     pageNumber = 1
     foodSection = 'Baby-Food'

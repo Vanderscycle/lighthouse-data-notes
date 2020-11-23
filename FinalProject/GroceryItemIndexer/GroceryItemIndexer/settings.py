@@ -1,4 +1,5 @@
 import os
+
 # Scrapy settings for GroceryItemIndexer project
 #
 # For simplicity, this file contains only settings considered important or
@@ -63,9 +64,9 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'GroceryItemIndexer.pipelines.GroceryitemindexerPipeline': 300,
-}
+# ITEM_PIPELINES = {
+#    'GroceryItemIndexer.pipelines.GroceryitemindexerPipeline': 300,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

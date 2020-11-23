@@ -1,4 +1,5 @@
 import scrapy
+from ..items import IpTimestamp
 
 class AmazonWholeFood(scrapy.Spider):
     # variable name required to run scrtapy crawl
@@ -11,8 +12,6 @@ class AmazonWholeFood(scrapy.Spider):
             yield request
 
     def parse(self,response):
-        yield {
-            'myip' : response.css('p::text').getall()
-            #'myip' : response.css('.a-color-base.a-text-normal').getall()
-        }
-        
+        ipInfo = IpTimestamp()
+        ipInfo['ip'] = response.css('p::text').getall()
+        yield ipInfo

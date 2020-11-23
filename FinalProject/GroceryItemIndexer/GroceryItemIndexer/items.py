@@ -4,7 +4,11 @@
 # https://docs.scrapy.org/en/latest/topics/items.html
 
 import scrapy
+from datetime import datetime
 
+def timestampReceival():
+    now = datetime.now()
+    return  now.strftime("%m/%d/%Y, %H")
 
 class GroceryitemindexerItem(scrapy.Item):
     # define the fields for your item here like:
@@ -18,3 +22,11 @@ class GroceryitemindexerItem(scrapy.Item):
     spider = scrapy.Field()
     section = scrapy.Field()
     time = scrapy.Field()
+
+class IpTimestamp(scrapy.Item):
+    ip = scrapy.Field()
+    time = timestampReceival() # doesn't work
+
+class FlyerItem(scrapy.Item):
+    store = scrapy.Field()
+    time = scrapy.Field() # the week the flyer is valid for
