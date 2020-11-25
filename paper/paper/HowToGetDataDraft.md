@@ -1,5 +1,19 @@
 # Scraping the web or how to gather data when there are no datasets for the problem you envision solving.
 
+Things to add:
+* files and images
+* proper proxies because most free proxies are already used up
+    * difference between proxies and vpn
+    * what types of proxies 
+    * service used and how I set local keys
+* proper pipelines when you have multiples files
+    * proper mongodb checks
+    * cool commands
+* using more than one parse function for a given spider
+* acting more human (injecting randomness) trough request and wait times
+* rework how to link and rotate 
+
+
 As a data science student you are given, and taught how to use, some of the greatest tools and techniques develloped by some of the brightest minds of our times to solve real world problems. While simple datasets (e.g. Iris) to extremely complex ones (AI2 hosted datasets) are readily available there will come a point where there isn't enough data available for what you are trying to archive or no such dataset exist, but the information is available online. This is where web scraping can help you bridge the gap since the web is essentially composed of words and pictures elements.
 
 Webpage design and layout is not standard accross all websites and so you must manually parse through each website to identify how the information you seek is contained. If your goal is to gather data and maintain a data pipeline, for later usage, accross from 1 - 20 websites then you can do it manually, but any change done by a webpage you scrape will require code adjustment.

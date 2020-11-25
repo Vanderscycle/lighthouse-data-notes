@@ -2,17 +2,37 @@ import scrapy
 import time
 import re
 from datetime import datetime
-from ..items import FlyerItem
+from ..items import FlyerItem, ImgData, timestampReceival
 import random
 
 
 class flyerSpider(scrapy.Spider):
+    # class variable for crawl command
     name = 'fSpider'
+    
+    # If you have multiple spiders that have different pipelines it is easier to have it part of the main spider.
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+    'scrapy.pipelines.images.FilesPipeline': 1,
+    'GroceryItemIndexer.pipelines.FlyerPipeline': 500,
+        },
+        'FILES_STORE' :"/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData",
+        # Scrapy filters duplicate requests by default, otherwise it 
+        'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter'
+    }
+    # exception handling? otherwise the data crashes
+    # def process_exception(self, request, exception, spider):
+    #     request.dont_filter = True
+    #     return request
+
+    # other relevan class variable
     stores = '' # dictionary of all stores names with urls
     currentStore = '' # the current store we are on
     storeFlyerDictRandom = '' # the store's associated flyers name/url in a random order
     storeCrawled = 0
-    storeFlyerCrawled = 0    
+    storeFlyerCrawled = 0
+
+
     def start_requests(self): 
         start_url = 'https://flyers.smartcanucks.ca/'
         yield scrapy.Request(url=start_url, callback=self.websiteSizingParser)
@@ -30,24 +50,25 @@ class flyerSpider(scrapy.Spider):
         flyerSpider.stores = {i:[name [i], href[i]] for i in range(len(name))}
         # choosing the first destination randomly
         nextStore = self.randomUrl(flyerSpider.stores)
-        self.logger.info(f'--------short Break 3-10 seconds')
-        time.sleep(random.randint(3, 10))
+        
         flyerSpider.currentStore = nextStore[0]
         # CLI feedback
         self.logger.info(f'The following store was selected: {nextStore[0]} ; url: {nextStore[1]}')
-        
+        self.logger.info(f'--------short Break 6-18 seconds')
+        time.sleep(random.randint(6, 18))
         yield scrapy.Request(url=nextStore[1], callback=self.storeParser)
 
 
     def storeParser(self,response):
         # eventually I will need a way to check the flyers otherwise I'm being a dick
+        # in that case that would only be the first flyer in the list
 
-        # this is the first time we are in the store so we want to map out the flyers
-        if storeFlyerCrawled%50==0:
+        # every 50 stores crawled we want to stop
+        if flyerSpider.storeFlyerCrawled%50==0 and flyerSpider.storeFlyerCrawled !=0:
             self.logger.info(f'--------long break 5-8 minutes')
             time.sleep(random.randint(5, 8)*60)
 
-
+        # this is the first time we are in the store so we want to map out the flyers
         storeFlyerDict = self.urlDictPackager(response.css('.view-flyer a::attr(href)').getall())
         randomOrderDict = dict()
         for i in range(len(storeFlyerDict)):
@@ -56,6 +77,8 @@ class flyerSpider(scrapy.Spider):
 
         # range(len(nextFlyer))
         nextFlyer = self.randomUrl(flyerSpider.storeFlyerDictRandom)
+        # add /all because that makes the website display all of the images.
+        nextFlyer[1] += '/all'
         self.logger.info(f'store: {flyerSpider.currentStore} flyer name: {nextFlyer[0]}; url: {nextFlyer[1]}')
         
         yield scrapy.Request(url=nextFlyer[1], callback=self.flyerParser)
@@ -65,7 +88,24 @@ class flyerSpider(scrapy.Spider):
 
         if len(flyerSpider.storeFlyerDictRandom)>0:
             ## --we parse the content and yield the data
-            # create a specific pipeline and item class
+
+            flyerItemDjango = FlyerItem()           
+            flyerItemDjango['store'] = flyerSpider.currentStore
+            flyerItemDjango['flyersDate'] = response.css('#flyer-title::text').get()
+            flyerItemDjango['spider'] = flyerSpider.name
+            flyerItemDjango['timeScraped'] = timestampReceival()
+            images = list()
+            for idx, imgUrl in enumerate(response.css('img::attr(src)')[2:-1].getall()):
+                flyerItemDjango['page'] = idx+1
+                flyerItemDjango['file_urls']=[imgUrl]
+                yield flyerItemDjango
+            #     cleanImageUrls.append(response.urljoin(imgUrl))
+
+            
+            #  # returns all of the images url
+            # yield {
+            #     'image_urls' : cleanImageUrls
+            # }
             # move to the next flyer
             flyerSpider.storeFlyerCrawled += 1
             nextFlyer = self.randomUrl(flyerSpider.storeFlyerDictRandom)
@@ -77,16 +117,18 @@ class flyerSpider(scrapy.Spider):
         # there are nomore flyers to go through
         else:
             #CLI stats
-            flyerSpider.storeFlyerCrawled = 0
+            
             flyerSpider.storeCrawled += 1
-            self.logger.info(f'--------we finished going through all the flyers in {flyerSpider.currentStore}')
+            self.logger.info(f'--------we finished going through all {flyerSpider.storeFlyerCrawled} flyers in {flyerSpider.currentStore}')
+            flyerSpider.storeFlyerCrawled = 0
             nextStore = self.randomUrl(flyerSpider.stores)
+            # CLI feedback
+            self.logger.info(f'The following store was selected: {nextStore[0]} ; url: {nextStore[1]}')
+            self.logger.info(f' we have crawled:{flyerSpider.storeCrawled} stores our of {len(flyerSpider.stores)} stores')
             self.logger.info(f'--------short Break 3-10 seconds')
             time.sleep(random.randint(3, 10))
             flyerSpider.currentStore = nextStore[0]
-            # CLI feedback
-            self.logger.info(f'The following store was selected: {nextStore[0]} ; url: {nextStore[1]}')
-            self.logger.info(f' we have crawled:{flyerSpider.storeCrawled} stores our of {len(flyerSpider.stores)}')
+            
             yield scrapy.Request(url=nextStore[1], callback=self.storeParser)
    
     # helper methods

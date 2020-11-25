@@ -25,8 +25,18 @@ class GroceryitemindexerItem(scrapy.Item):
 
 class IpTimestamp(scrapy.Item):
     ip = scrapy.Field()
-    time = timestampReceival() # doesn't work
+    time = scrapy.Field() # doesn't work
 
 class FlyerItem(scrapy.Item):
     store = scrapy.Field()
-    time = scrapy.Field() # the week the flyer is valid for
+    flyersDate = scrapy.Field() # the week the flyer is valid for
+    file_urls = scrapy.Field()
+    files = scrapy.Field()
+    spider = scrapy.Field()
+    page = scrapy.Field()
+    timeScraped = scrapy.Field()
+
+class ImgData(scrapy.Item):
+    image_urls=scrapy.Field()
+    images=scrapy.Field()
+

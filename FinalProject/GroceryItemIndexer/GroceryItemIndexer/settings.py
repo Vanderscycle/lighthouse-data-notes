@@ -9,11 +9,15 @@ import os
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-#BOT_NAME = 'GroceryItemIndexer'
+BOT_NAME = 'GroceryItemIndexer'
 
 SPIDER_MODULES = ['GroceryItemIndexer.spiders']
 NEWSPIDER_MODULE = 'GroceryItemIndexer.spiders'
 
+# FILES_STORE ='/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData'
+# ITEM_PIPELINES = {
+#     'scrapy.pipelines.images.FilesPipeline': 1,
+# }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' 
