@@ -620,7 +620,7 @@ The creation of robots in order to create your own data is a fascinating endaveo
 
 The example we used, XKCD, is very friendly to beginners as it is mostly an HTML page but modern websites using JS framework can cause our robot to not recognize the data. Scrapy can be integrated by using [Splash](https://github.com/scrapy-plugins/scrapy-splash) and [Selenium](https://www.selenium.dev/), but it adds greater levels of complexity to our robot. I am unable, at the moment, to venture past as I require JS knowledge.
 
-What more if that manually encoding a scrapper for a specific webpage
+What more if that manually encoding a scrapper for a specific webpage takes alot of time to get running.
 ## Special thank you
 
 I want to thank [buildwithpython](https://www.youtube.com/channel/UCirPbvoHzD78Lnyll6YYUpg) youtube channel, [Traversy Media](https://www.youtube.com/user/TechGuyWeb) youtube channel, [Scrapinghub](https://blog.scrapinghub.com/) blog and anyone who took some of their precious time to answer questions on stakOverflow. Without you I could not have grasped the concept of scrapy in the time required to write this paper.
