@@ -1,8 +1,5 @@
 # Scraping the web or how to gather data when there are no datasets for the problem you envision solving.
 
-Things to add:
-
-
 As a data science student you are given, and taught how to use, some of the greatest tools and techniques develloped by some of the brightest minds of our times to solve real world problems. While simple datasets (e.g. Iris) to extremely complex ones (AI2 hosted datasets) are readily available there will come a point where there isn't enough data available for what you are trying to archive or no such dataset exist, but the information is available online. This is where web scraping can help you bridge the gap since the web is essentially composed of words and pictures elements.
 
 Webpage design and layout is not standard accross all websites and so you must manually parse through each website to identify how the information you seek is contained. If your goal is to gather data and maintain a data pipeline, for later usage, accross from 1 - 20 websites then you can do it manually, but any change done by a webpage you scrape will require code adjustment.
@@ -10,26 +7,28 @@ Webpage design and layout is not standard accross all websites and so you must m
 
 The following libraries are available to for you to use in a Python environment:
 * [Requests](https://requests.readthedocs.io/en/master/)
-    * extremely popular and capable
+    * extremely popular and capable,and;
+    * its simplicity allows you to use it for API calls and scraping.
 * [Beautiful Soup 4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
     * Can only parse HTML and requires additional libraries (i.e. Selenium) to parse content created by JS;
-    * easy and comprehensive documentation
+    * has a large community, and;
+    * easy and comprehensive documentation.
 * [Scrapy](https://scrapy.org/)
     * steep learning curve;
     * needs additional libraries (e.g. splah/Selenium) to handle very heavy JavaScipt pages;
-    * synthax close to Django;
-    * highly modular due to its python class usage;
+    * synthax close to Django,and;
+    * highly modular due to its python class usage.
 
-This tutorial will focus on Scrapy due to its asynchronous capabilities, powerful command line capabilities, data pipelines and complementing libraries.
+This tutorial will focus on Scrapy due to its asynchronous capabilities, powerful command line capabilities, data pipelines, classes, and complementing libraries. All this together makes this learning endaevour worhtwhile.
 
 ## Exploratory data analysis
-Using a modern browser, I recommend Mozilla or Chrome, you can use the inspect element by right-clinking on the element you wish to inpect and then right-clicking on inspect element. You should be greated by this window in your browser.
+Using a modern browser, I recommend Mozilla or Chrome, you can use the inspect element by right-clinking on the element you wish to inspect. You should be greeted by this window in your browser. 
 
 ![Mozzila](https://media.prod.mdn.mozit.cloud/attachments/2018/12/10/16386/59193d46269aefb0d8b504ec92fe7f24/pageInspector.png)
 
 From then on you can read what are the class variable names for the information you wish to extract from the webpage. This is extremely usefull as we will later use this technique in the command line to confirm that we have the right elements.
 
-Other important elements in the inspector is Network (must reload the page, but enables you to see packages passed by the server) and accesibility (while meant to expose the page info to assistive technology it allows us to see the info in a JSON format).
+Other important elements in the inspector is network (must reload the page, but enables you to see packages passed by the server) and accesibility (while meant to expose the page info to assistive technology it allows us to see the info in a JSON format). The network becomes crucial when listening to the browser request in dynamically generated content. [John Watson Rooney](https://www.youtube.com/watch?v=GqICHBfeAWk) goes over how to do it proprely and I highly recommend that you check out more of his content on scraping.
 
 ## Before we write our first line of code
 
@@ -43,7 +42,7 @@ If we use a house as an example then the HTML language is used in the same way a
 
 After HTML and CSS comes JavaScript (JS) which is used to program the behavior of a web page. JS is an important language in modern web creation, but it also creates additional challenges as an heavily scripted JS website can cause our spider to not be able to return the HMTL structure needed to scrape the website. Unfortunately, I do not fully grasp how modern website are dynamically generated, and I will have to learn JS in the future. Of note, PHP/Ruby/Ruby on Rail are also used to dynamically generate content on webpages.
 
-## robot.txt
+## Robot.txt
 Robot exclusion standard or robots.txt is a standard used by all website and set the rules for the robot to follow. Scrapy spiders will always check the robots.txt file of a website before proceeding. 
 
 In the robots.txt bellow the website indicates that all robots are asked to not proceed to the website
@@ -67,7 +66,7 @@ Of note it is possible to disable such rules with scrapy but doing so will most 
 
 for more information consult: [/robot.txt](https://www.robotstxt.org/robotstxt.html)
 For an entertaining example read [wikipedia.org/robots.txt](https://en.wikipedia.org/robots.txt)
-## installing Scrapy 
+## Installing Scrapy 
 Installing Scrapy is very [easy](https://docs.scrapy.org/en/latest/intro/install.html):
 * if you are using a conda environment:
 ```
@@ -78,19 +77,20 @@ conda install -c conda-forge scrapy
 pip install Scrapy
 ```
 Both methods will work fine.
-## setting our environment for the first time
+## Setting our environment for the first time
 Using any terminal on your machine type the following command in the directory of your choice
 ```
 scrapy startproject {NameOfYourProject}
 ```
 The following files and folders will be automatically created:
 * spiders folder where all your spiders files will be located;
-* [items.py](https://docs.scrapy.org/en/latest/topics/items.html): allows you to configure the extracted data python dictionaries;
-* [middlewares.py](https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=spider-middleware): file where you can create custom functionalities for processing request. Refer to the documentation but also do not forget to enable them in the settings file afterward;
-* [pipelines.py](https://docs.scrapy.org/en/latest/topics/item-pipeline.html?highlight=pipeline): python class allowing you to process response elements, must be enabled in the settings file afterward;
-* [settings.py](https://docs.scrapy.org/en/latest/topics/settings.html): the most important file for our spider as it deeply alter its behavior.
+* [items.py](https://docs.scrapy.org/en/latest/topics/items.html): allows you to create as item classes to handle various data.;
+* [middlewares.py](https://docs.scrapy.org/en/latest/topics/spider-middleware.html?highlight=spider-middleware): file where you can create custom functionalities for processing request. Refer to the documentation but also do not forget to enable them in the settings file afterward.;
+* [pipelines.py](https://docs.scrapy.org/en/latest/topics/item-pipeline.html?highlight=pipeline): python class allowing you to process response elements, must be enabled in the settings file afterward. I recommend checking the advanced spiders section as any pipeline listed in the setting file will force any items classes generated to go through. This becomes an issues when you have multiple spiders extracting different items classes.;
+* [settings.py](https://docs.scrapy.org/en/latest/topics/settings.html): the most important file for our spider as it deeply alter its behavior. Of note, you can list specififc spider settings by writting them in the spider class.
 
 All that you need to get started writing your first spider is to create a .py script in the spiders folder.
+
 ## Exploratory Analysis using command line
 Let's get started using command line first 
 ```
@@ -101,13 +101,14 @@ The most important thing is to see what response we get from the server. In our 
 # in our case
 2020-11-07 20:53:35 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://xkcd.com/2382/> (referer: None)
 ```
-Since programming is an iterative process, the command line allows us to safely explore the server's answer without having to constantly ping the server. From then on, the world is our oyster and we can safely explore the data.
+Since programming is an iterative process, the command line allows us to safely explore the server's answer without having to constantly ping the server. From then on, the world is our oyster and we can safely explore the data. I highly recommend writting your data extraction for loops first in the CLI before running it with your spider.
 
 We will mainly use [CSS selectors](https://www.w3.org/TR/selectors-3/#selectors) which do not return support text nodes or attribute value but can do so using: 
 ```
 ::text or ::attr(name)
 ```
-While I prefer CSS selector, you can also use .xpath() to select the xml node. Also CSS selectors uses xpath under the hood. I highly recommend this source when using [CSS](https://www.w3schools.com/cssref/css_selectors.asp).
+
+While I prefer CSS selector, you can also use .xpath() to select the xml node. Also CSS selectors uses xpath under the hood. I highly recommend this source when using [CSS](https://www.w3schools.com/cssref/css_selectors.asp) as the way you indicates a class or id is different.
 
 let's find the XKCD number, title, image url, and hidden text. 
 Using the element inspector in the browser we find that the title info is wrapped in id=title and subordinate to id=middleContaiter.
@@ -144,7 +145,7 @@ In [5]:['2381']
 I highly recommend that you refresh your memory on [regex](https://regexone.com/lesson/line_beginning_end) and test them[beforehand](regex101.com/). Also a refresher on Python classes is not a bad idea either.
 
 Now that we have succefully extracted all the information in the shell we are ready to write the script.
-## writing our first spider
+## Writing our first spider
 Now that we are familiar with the server's response we are ready to write out the script. We only need two things for that: a class and the parse method to process the spider's response.
 ```
 import scrapy
@@ -184,21 +185,24 @@ In the terminal it should return this:
 ```
 And opening the xkcdResults.json should display the exact same information.
 
-Since our goal is to crawl an entire website without having define everysingle page's url we can loop the spider using the urljoin method and then issuing another reuest. Luckily for us the comic # is also used as page index so adding the following code in the class parse method should allow us to loop. You can confirm using the inspector tool in your browser.
 
-![alt text](nextpagelink.png "Accessing the next page through the Prev button")
 
-## looping
-For looping successfully you are looking to find a valid url string that leads to a valid page. In the xkcd example it is very important to look at the changes in the url of your browser to see the pattern used by the website. I recommend watching this video as the [author skillfully loops](https://www.youtube.com/watch?v=ALizgnSFTwQ) in the shell and in a py file.
+## Looping
+For looping successfully you are looking to find a valid url string that leads to a valid page. In the xkcd example it is very important to look at the changes in the url of your browser to see the pattern used by the website. I recommend watching this video as the [author skillfully loops](https://www.youtube.com/watch?v=ALizgnSFTwQ) in the shell and in a py file. 
+
+For our spider we notice that whenever we change the page the url changes the number contained in the url. This leads us to believe that if we can find the comic number and append it to base URL (https://xkcd.com/{commic#}) we can reliably yield the next page.
 
 ![comic 2388](2388.png)
 ![comic 2389](2389.png)
 
-I just want to remind you that one of the field we wanted to save,comic number, is also the addition to the base url that allows us to access the next page.
+Since our goal is to crawl an entire website without having define everysingle page's url we can loop the spider using the urljoin method and then issuing another reuest. Luckily for us the comic # is also used as page index so adding the following code in the class parse method should allow us to loop. You can confirm using the inspector tool in your browser.
+
+![alt text](nextpagelink.png "Accessing the next page through the Prev button")
+
+I just want to remind you that one of the field we wanted to save, comic number, is also the addition to the base url that allows us to access the next page. Whether you wish to start at comic 1 to the latest or vice versa is up to you.
 
 
 ```
-
         next_page = response.css('#middleContainer ul li a::attr(href)')[1].get()
         nextPageRegex = r'(\d+)'
         match = re.search(nextPageRegex,next_page)
@@ -210,7 +214,6 @@ I just want to remind you that one of the field we wanted to save,comic number, 
 ```
 If you want to scrape the to the end:
 ```
-
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page,callback=self.parse)
@@ -219,7 +222,7 @@ If you want to scrape the to the end:
 ```
 Scrapy schedules the scrapy.Request objects returned by the start_requests method of the Spider (in our case we chose to use start_urls as a shortcut). Upon receiving a response for each one, it instantiates Response objects and calls the callback method associated with the request (in this case, the parse method) passing the response as argument. The parse method will generate the information we seek and then generate a scrapy.Request which will then be processed by the parse method which is akin to a while loop.
 
-## using item containers
+## Item containers
 So far we wrote our spider in a single script but as you realized this is messy. The general idea is Extracted data -> Temporary containers -> databse
 
 In the items.py file you can add the following fields
@@ -254,8 +257,8 @@ Then we create a class instance and modify the parse method accordingly
         yield comic
 ```
 now instead of generating a dictionary we can simply yield the class instance comic
-## files and images items
-Has you have noted we didn't actually download the image. Scrapy allows you to download using the file/image pipeline and required field. In the example bellow we wanted the image but also more information. [Check the documentation](https://docs.scrapy.org/en/0.24/topics/images.html)
+## Files and images items
+Has you have noted we didn't actually download the image. Scrapy allows you to download using the file/image pipeline and required field. In the example bellow we wanted the image but also more information. [Check the documentation](https://docs.scrapy.org/en/0.24/topics/images.html) as it can be finnicky and you may have to create a test spider before integrating in your main spider.
 ```
 class FlyerItem(scrapy.Item):
     store = scrapy.Field()
@@ -314,6 +317,7 @@ The 300 number refers to the pipeline priority, and so if you have multiple pipe
 When the parse method yield an item it will, if available, pass it to the pipeline for processing. To confirm that the pipeline receives the desired info we will write the following code:
 ```
 from itemadapter import ItemAdapter
+
 # you can have multiple classes
 class XkcdtestspiderPipeline:
     def process_item(self, item, spider):
@@ -345,7 +349,7 @@ class flyerSpider(scrapy.Spider):
         'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter'
     }
 ```
-## advanced spiders writting
+## Advanced spiders writting
 You do not have to write everything in a single method. You can create multiple parsing functions and go through using the callback parameter.
 ```
 
@@ -386,7 +390,7 @@ Also using randomness in the order we pick URL is also important
         return selectedURL
 ```
 
-## storing data in database
+## Storing data in database
 You can store the data from the pipeline into the following popular databases: sqlite3/MySQL/MongoDB. Due to the unstructured nature of scraping and its ever changing nature we will use NOSQL language.
 
 First step is to [install](https://docs.mongodb.com/manual/administration/install-community/) MongoDB and then start it.
@@ -494,12 +498,12 @@ Since Scrapy spiders are incredibly fast and their asynchronus capibilites can c
 CONCURRENT_REQUESTS = 4 
 DOWNLOAD_DELAY = 3 # Default is 0 second
 ```
-Scrapy offers an automatic option through throttling
+Scrapy offers an automatic option through throttling which I do recommend overall instead of doing so manually:
 ```
 # AutoThrottle automatically adjusts the delays between requests according to the current web server load.
 AUTOTHROTTLE_ENABLED = True
 ```
-Programing a spider may require you to ping the samepage multiple time as your spider evolves. This may cause undue stress on the server at best and at worst get your IP banned. 
+Programing a spider may require you to ping the samepage multiple time as your spider evolves. This may cause undue stress on the server at best and at worst get your IP banned. Enabling the cache saves the response url content in a temporary file so that you do now have to ping the website when debugging the spider. 
 ```
 HTTPCACHE_ENABLED = True
 ```
@@ -509,7 +513,7 @@ If a website has an API please use it for it will most likely relieve some heada
 What we are doing is not very polite, but it is still important to be aware of its capabilities.
 
 ### User agents
-As we learned in robots.txt, you can bypass websites restrcitions by using a different [user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). A user agent is a characteristic string that lets servers and network peers identify the application, operating system, vendor, and/or version of the requesting user agent. You can do so by modifying the robot user agent in the settings file. You can even trick websites into believing that you are google.
+As we learned in robots.txt, you can bypass websites restrcitions by using a different [user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). A user agent is a characteristic string that lets servers and network peers identify the application, operating system, vendor, and/or version of the requesting user agent. You can do so by modifying the robot user agent in the settings file. You can even trick websites into believing that you are [Google](https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers?hl=en&visit_id=637420217784273211-1628247958&rd=1).
 ```
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'xkcdTestSpider (+http://www.yourdomain.com)'
@@ -529,7 +533,13 @@ DOWNLOADER_MIDDLEWARES = {
 If curious you can see yours [here](https://www.whatismybrowser.com/detect/what-is-my-user-agent)
 
 ### Proxies
-The idea behind this is simple, we will use a different IP address so that we do not get our own IP address banned. You can also use a VPN. Essentially every request you make, will use a different IP. Similarly to user agents we can install the following [package](https://github.com/rejoiceinhope/scrapy-proxy-pool):
+
+Services like [this residential/Database IPs](https://smartproxy.com/) 
+
+To put it very simply proxies allows you to use the residential or database IP to make the query while isolating your own Ip. This is important since a webpage server can ban the Ip (HTTP Error 503)
+![alt text](Proxy-Server.png)
+
+So for our spider, we will be using a different IP address so that we do not get our own IP address banned. Essentially every request you make, will use a different IP. Similarly to user agents we can install the following [package](https://github.com/rejoiceinhope/scrapy-proxy-pool):
 ```
 pip install scrapy_proxy_pool
 ```
@@ -541,7 +551,7 @@ DOWNLOADER_MIDDLEWARES = {
     'scrapy_proxy_pool.middlewares.BanDetectionMiddleware': 620,
 }
 ```
-Please be aware that using proxies takes significantly longer than using a user agents since some ip addresses may not be working. You can also your own ip [addresses](https://free-proxy-list.net/)
+Please be aware that using this free proxy method takes significantly longer than using a user agents since some ip addresses may not be working. You can also create your own ip list from various [addresses](https://free-proxy-list.net/). But you will have to check if they are available first before using them. [John Watson Rooney](https://www.youtube.com/watch?v=vJwcW2gCCE4) shows a very clever way to check for valid IP.
 
 Here is a quick spider that allows you to check you IP. Of none the IpTimestamp() class in the code is the item instance that I configured in items.py.
 
@@ -578,13 +588,6 @@ class IpTimestamp(scrapy.Item):
 
 Now this becomes time consuming since you need to check for IP before scraping. In this case you may want to use proxies to hide your IP and have it rotate every few request to every few minutes.
 
-Services like [this residential/Database IPs](https://smartproxy.com/) 
-
-## Proxies 
-
-To put it very simply proxies allows you to use the residential or database IP to make the query while isolating your own Ip. This is important since a webpage server can ban the Ip (HTTP Error 503)
-![alt text](Proxy-Server.png)
-
 
 The proxy service that I used for my project had [support for scrapy](https://help.smartproxy.com/docs/how-to-setup-proxy-on-scrapy-proxy-middleware). If you are using a different proxy or VPN check how authentification to the proxy is acquired. 
 
@@ -610,7 +613,7 @@ SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you 
 
 To conclude if you intend to hide your IP it is better to use proxies. I have read that scrapy can be used in combination with TOR, but this is something that I haven't explored.
 
-## full spiders examples
+## Full spiders examples
 
 Please have a look at my [git hub final project folder](https://github.com/Vanderscycle/lighthouse-data-notes/tree/master/FinalProject/GroceryItemIndexer/GroceryItemIndexer)
 
@@ -621,9 +624,9 @@ The creation of robots in order to create your own data is a fascinating endaveo
 The example we used, XKCD, is very friendly to beginners as it is mostly an HTML page but modern websites using JS framework can cause our robot to not recognize the data. Scrapy can be integrated by using [Splash](https://github.com/scrapy-plugins/scrapy-splash) and [Selenium](https://www.selenium.dev/), but it adds greater levels of complexity to our robot. I am unable, at the moment, to venture past as I require JS knowledge.
 
 What more if that manually encoding a scrapper for a specific webpage takes alot of time to get running.
-## Special thank you
+## Special thank yous
 
-I want to thank [buildwithpython](https://www.youtube.com/channel/UCirPbvoHzD78Lnyll6YYUpg) youtube channel, [Traversy Media](https://www.youtube.com/user/TechGuyWeb) youtube channel, [Scrapinghub](https://blog.scrapinghub.com/) blog and anyone who took some of their precious time to answer questions on stakOverflow. Without you I could not have grasped the concept of scrapy in the time required to write this paper.
+I want to thank [buildwithpython](https://www.youtube.com/channel/UCirPbvoHzD78Lnyll6YYUpg) youtube channel, [Traversy Media](https://www.youtube.com/user/TechGuyWeb) youtube channel, [John Watson Rooney](https://www.youtube.com/channel/UC8tgRQ7DOzAbn9L7zDL8mLg) youtube channel, [Scrapinghub](https://blog.scrapinghub.com/) blog and anyone who took some of their precious time to answer questions on stakOverflow. Without you I could not have grasped the concept of scrapy in the time required to write this paper.
 
 ## Closing statement
 
