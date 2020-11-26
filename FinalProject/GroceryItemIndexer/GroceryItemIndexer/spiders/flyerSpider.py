@@ -136,9 +136,7 @@ class flyerSpider(scrapy.Spider):
         # we want to obtain a random index. Since we are passing a Dict Python wants a list
         randIdx = random.sample(list(dictionary),1)
         # since we do not want to visit the address again we remove it from the list
-        # 
         selectedURL = dictionary.pop(randIdx[0])
-
         return selectedURL
 
     def urlDictPackager(self,responseList,regex=''):

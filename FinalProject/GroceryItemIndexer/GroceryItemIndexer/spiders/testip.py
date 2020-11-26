@@ -1,5 +1,10 @@
 import scrapy
-from ..items import IpTimestamp,timestampReceival
+from datetime import datetime
+from ..items import IpTimestamp,
+
+def timestampReceival():
+    now = datetime.now()
+    return  now.strftime("%m/%d/%Y, %H")
 
 class AmazonWholeFood(scrapy.Spider):
     # variable name required to run scrtapy crawl

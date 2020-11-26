@@ -1,17 +1,6 @@
 # Scraping the web or how to gather data when there are no datasets for the problem you envision solving.
 
 Things to add:
-* files and images
-* proper proxies because most free proxies are already used up
-    * difference between proxies and vpn
-    * what types of proxies 
-    * service used and how I set local keys
-* proper pipelines when you have multiples files
-    * proper mongodb checks
-    * cool commands
-* using more than one parse function for a given spider
-* acting more human (injecting randomness) trough request and wait times
-* rework how to link and rotate 
 
 
 As a data science student you are given, and taught how to use, some of the greatest tools and techniques develloped by some of the brightest minds of our times to solve real world problems. While simple datasets (e.g. Iris) to extremely complex ones (AI2 hosted datasets) are readily available there will come a point where there isn't enough data available for what you are trying to archive or no such dataset exist, but the information is available online. This is where web scraping can help you bridge the gap since the web is essentially composed of words and pictures elements.
@@ -124,6 +113,7 @@ let's find the XKCD number, title, image url, and hidden text.
 Using the element inspector in the browser we find that the title info is wrapped in id=title and subordinate to id=middleContaiter.
 ![alt text](title.png "Title")
 
+[I also really recommend this extension](https://selectorgadget.com/) as it makes css selection and isolation much easier visually.
 ```
 In [1]: response.css('#middleContainer #ctitle::text')
 Out[1]: [<Selector xpath="descendant-or-self::*[@id = 'middleContainer']/descendant-or-self::*/*[@id = 'ctitle']/text()" data='Ballot Tracker Tracker'>]
@@ -197,19 +187,35 @@ And opening the xkcdResults.json should display the exact same information.
 Since our goal is to crawl an entire website without having define everysingle page's url we can loop the spider using the urljoin method and then issuing another reuest. Luckily for us the comic # is also used as page index so adding the following code in the class parse method should allow us to loop. You can confirm using the inspector tool in your browser.
 
 ![alt text](nextpagelink.png "Accessing the next page through the Prev button")
+
+## looping
+For looping successfully you are looking to find a valid url string that leads to a valid page. In the xkcd example it is very important to look at the changes in the url of your browser to see the pattern used by the website. I recommend watching this video as the [author skillfully loops](https://www.youtube.com/watch?v=ALizgnSFTwQ) in the shell and in a py file.
+
+![comic 2388](2388.png)
+![comic 2389](2389.png)
+
+I just want to remind you that one of the field we wanted to save,comic number, is also the addition to the base url that allows us to access the next page.
+
+
 ```
-        # now we want to loop
 
-        # if we want to scrape the entire website
-        # if next_page is not None:
-            # next_page = response.urljoin(next_page)
-            # yield scrapy.Request(next_page,callback=self.parse)
-
+        next_page = response.css('#middleContainer ul li a::attr(href)')[1].get()
+        nextPageRegex = r'(\d+)'
+        match = re.search(nextPageRegex,next_page)
 
         # we are using the comic # as a way to stop
         if int(match[0]) > 2300:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page,callback=self.parse)
+```
+If you want to scrape the to the end:
+```
+
+        if next_page is not None:
+            next_page = response.urljoin(next_page)
+            yield scrapy.Request(next_page,callback=self.parse)
+
+
 ```
 Scrapy schedules the scrapy.Request objects returned by the start_requests method of the Spider (in our case we chose to use start_urls as a shortcut). Upon receiving a response for each one, it instantiates Response objects and calls the callback method associated with the request (in this case, the parse method) passing the response as argument. The parse method will generate the information we seek and then generate a scrapy.Request which will then be processed by the parse method which is akin to a while loop.
 
@@ -248,6 +254,44 @@ Then we create a class instance and modify the parse method accordingly
         yield comic
 ```
 now instead of generating a dictionary we can simply yield the class instance comic
+## files and images items
+Has you have noted we didn't actually download the image. Scrapy allows you to download using the file/image pipeline and required field. In the example bellow we wanted the image but also more information. [Check the documentation](https://docs.scrapy.org/en/0.24/topics/images.html)
+```
+class FlyerItem(scrapy.Item):
+    store = scrapy.Field()
+    flyersDate = scrapy.Field() # the week the flyer is valid for
+    
+    # Required field bellow for files
+    file_urls = scrapy.Field()
+    files = scrapy.Field()
+    # Required field above
+
+    # image_urls = scrapy.Field() # if using images
+    # images = scrapy.Field() # if using images
+
+    spider = scrapy.Field()
+    page = scrapy.Field()
+    timeScraped = scrapy.Field()
+```
+In our code we used files even though the file format we will download is an image. I don't why this worked for me instead of images. You will understand the code bellow if you read the pipeline section.  
+```
+class flyerSpider(scrapy.Spider):
+    # class variable for crawl command
+    name = 'fSpider'
+    
+    # If you have multiple spiders that have different pipelines it is easier to have it part of the main spider.
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+    'scrapy.pipelines.images.FilesPipeline': 1,
+    'GroceryItemIndexer.pipelines.FlyerPipeline': 500,
+        },
+        # FILE_STORE is the download location
+        'FILES_STORE' :"/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData",
+        # Scrapy filters duplicate requests by default, otherwise it 
+        'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter'
+    }
+```
+
 ## Item pipelines
 All we have done so far was to extract the data onto a .json/.xml/.csv file in the same folder of our spider.
 
@@ -270,9 +314,10 @@ The 300 number refers to the pipeline priority, and so if you have multiple pipe
 When the parse method yield an item it will, if available, pass it to the pipeline for processing. To confirm that the pipeline receives the desired info we will write the following code:
 ```
 from itemadapter import ItemAdapter
-
+# you can have multiple classes
 class XkcdtestspiderPipeline:
     def process_item(self, item, spider):
+    # confirming the data is correct
         for k,v in item.items():
             print(f'pipeline key: {k}; value: {v}')
         return item
@@ -284,6 +329,63 @@ pipeline key: comicNumber value: 2381
 pipeline key: comicImageLink value: imgs.xkcd.com/comics/ballot_tracker_tracker.png
 pipeline key: comicHiddenText value: ['Good luck to Democrats in the upcoming Georgia runoff elections, and to the Google Sheets SREs in the current run-on elections.']
 ```
+If you have multiple spides in a project it may comes to a point where desired pipelines conflict. Instead of creating a new project you can use the custom pipeline
+
+```
+class flyerSpider(scrapy.Spider):
+    # class variable for crawl command
+    name = 'fSpider'
+    custom_settings = {
+        'ITEM_PIPELINES' : {
+    'scrapy.pipelines.images.FilesPipeline': 1,
+    'GroceryItemIndexer.pipelines.FlyerPipeline': 500,
+        },
+        'FILES_STORE' :"/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData",
+        # Scrapy filters duplicate requests by default, otherwise it 
+        'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter'
+    }
+```
+## advanced spiders writting
+You do not have to write everything in a single method. You can create multiple parsing functions and go through using the callback parameter.
+```
+
+# e.g.
+def start_requests(self):
+    # {work}
+    scrapy.Request(url=start_url, callback=self.storeParser)
+
+def storeParser(self):
+    # {work}
+    scrapy.Request(url=nextStore[1], callback=self.departmentParser)
+
+def departmentParser(self):
+    # {work}
+    scrapy.Request(url={your next url}, callback=self.{nextMethod})
+```
+If your goal is to scrap for a long duration you may run the risk of getting banned. What you can do it introduce randomness and pause your scraping:
+```
+import time
+    self.logger.info(f'--------long break 5-8 minutes')
+    time.sleep(random.randint(5, 8)*60)
+
+    self.logger.info(f'--------short Break 3-10 seconds')
+    time.sleep(random.randint(3, 10))
+```
+Also using randomness in the order we pick URL is also important
+```
+    def randomUrl(self,dictionary):
+    """
+    Takes a dictionary with{url, nameCat}
+    """
+        # we want to obtain a random index. Since we are passing a Dict Python wants a list
+        randIdx = random.sample(list(dictionary),1) # provides a the random index 
+        
+        # since we do not want to visit the address again we remove it from the list which also changes the list size the next time we will use teh function
+        
+        selectedURL = dictionary.pop(randIdx[0])
+        return selectedURL
+```
+
 ## storing data in database
 You can store the data from the pipeline into the following popular databases: sqlite3/MySQL/MongoDB. Due to the unstructured nature of scraping and its ever changing nature we will use NOSQL language.
 
@@ -364,6 +466,14 @@ You should see the following in the in the MongoDB
 	]
 }
 ```
+Usefull commands
+```
+show dbs() # show available db
+use {thedbname} #db selection
+show collections # shows all your tables
+db.{theCollectionName}.count() # how many entries
+db.{theCollectionName}.find().pretty() # show the data pretily
+```
 Of note: more logic can be implemented when passing data to the database so that we do not pass duplicates of records already present in.
 ## Parameter setting (robot politeness)
 Ultimately, unless your express goal is to create a Denial Of Service (DOS) attack,  you do not want your robot to negatively impact the performance of the website it is scraping the data from.
@@ -397,6 +507,7 @@ If a website has an API please use it for it will most likely relieve some heada
 
 ## Proxies/User agents (unpolite robot)
 What we are doing is not very polite, but it is still important to be aware of its capabilities.
+
 ### User agents
 As we learned in robots.txt, you can bypass websites restrcitions by using a different [user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). A user agent is a characteristic string that lets servers and network peers identify the application, operating system, vendor, and/or version of the requesting user agent. You can do so by modifying the robot user agent in the settings file. You can even trick websites into believing that you are google.
 ```
@@ -432,14 +543,88 @@ DOWNLOADER_MIDDLEWARES = {
 ```
 Please be aware that using proxies takes significantly longer than using a user agents since some ip addresses may not be working. You can also your own ip [addresses](https://free-proxy-list.net/)
 
+Here is a quick spider that allows you to check you IP. Of none the IpTimestamp() class in the code is the item instance that I configured in items.py.
+
+```
+import scrapy
+from datetime import datetime
+#from ..items import IpTimestamp,
+
+def timestampReceival():
+    now = datetime.now()
+    return  now.strftime("%m/%d/%Y, %H")
+
+class AmazonWholeFood(scrapy.Spider):
+    # variable name required to run scrtapy crawl
+    name = 'testip'
+    
+    def start_requests(self):
+        urls = ['https://httpbin.org/ip']
+        for url in urls:
+            request = scrapy.Request(url=url, callback=self.parse)
+            yield request
+
+    def parse(self,response):
+        ipInfo = IpTimestamp()
+        ipInfo['ip'] = response.css('p::text').getall()
+        ipInfo['time'] = timestampReceival()
+        yield ipInfo
+# the item.py
+class IpTimestamp(scrapy.Item):
+    ip = scrapy.Field()
+    time = scrapy.Field() # doesn't work
+
+```
+
+Now this becomes time consuming since you need to check for IP before scraping. In this case you may want to use proxies to hide your IP and have it rotate every few request to every few minutes.
+
+Services like [this residential/Database IPs](https://smartproxy.com/) 
+
+## Proxies 
+
+To put it very simply proxies allows you to use the residential or database IP to make the query while isolating your own Ip. This is important since a webpage server can ban the Ip (HTTP Error 503)
+![alt text](Proxy-Server.png)
+
+
+The proxy service that I used for my project had [support for scrapy](https://help.smartproxy.com/docs/how-to-setup-proxy-on-scrapy-proxy-middleware). If you are using a different proxy or VPN check how authentification to the proxy is acquired. 
+
+It is very important to never save your key or identification so use this tutorial for [your environment](https://towardsdatascience.com/how-to-hide-your-api-keys-in-python-fb2e1a61b0a0)
+```
+DOWNLOADER_MIDDLEWARES = {
+    # userAgent change
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
+    # proxy
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 110,
+    'GroceryItemIndexer.smartproxy_auth.ProxyMiddleware': 100,
+    # 
+    #'scrapy.downloadermiddlewares.retry.RetryMiddleware': 90,
+}
+
+
+SMARTPROXY_USER = os.environ.get("SMARTPROXY_USER") ## Smartproxy Username (Sub-user)
+SMARTPROXY_PASSWORD = os.environ.get("SMARTPROXY_PASSWORD") ## Password for your user
+SMARTPROXY_ENDPOINT = os.environ.get("SMARTPROXY_ENDPOINT") ## Endpoint you'd like to use #gate.smartproxy.com
+SMARTPROXY_PORT = os.environ.get("SMARTPROXY_PORT") ## Port of the endpoint you are using.
+```
+
+To conclude if you intend to hide your IP it is better to use proxies. I have read that scrapy can be used in combination with TOR, but this is something that I haven't explored.
+
+## full spiders examples
+
+Please have a look at my [git hub final project folder](https://github.com/Vanderscycle/lighthouse-data-notes/tree/master/FinalProject/GroceryItemIndexer/GroceryItemIndexer)
+
 ## Challenges of scraping
 
 The creation of robots in order to create your own data is a fascinating endaveour but also a manually intensive process. Using Convoluted [Neural Networks (CNN)](https://www.youtube.com/watch?v=q0lQAMqQViA) to not only get the data but also extract the data using Neuro-linguistic programming (NLP) would greatly increase the range of our spiders.
 
-Lastly, the example we used, XKCD, is very friendly to beginners as it is mostly an HTML page but modern websites using JS framework can cause our robot to not recognize the data. Scrapy can be integrated by using [Splash](https://github.com/scrapy-plugins/scrapy-splash) and [Selenium](https://www.selenium.dev/), but it adds greater levels of complexity to our robot. I am unable, at the moment, to venture past as I require JS knowledge.
+The example we used, XKCD, is very friendly to beginners as it is mostly an HTML page but modern websites using JS framework can cause our robot to not recognize the data. Scrapy can be integrated by using [Splash](https://github.com/scrapy-plugins/scrapy-splash) and [Selenium](https://www.selenium.dev/), but it adds greater levels of complexity to our robot. I am unable, at the moment, to venture past as I require JS knowledge.
+
+What more if that manually encoding a scrapper for a specific webpage
 ## Special thank you
 
 I want to thank [buildwithpython](https://www.youtube.com/channel/UCirPbvoHzD78Lnyll6YYUpg) youtube channel, [Traversy Media](https://www.youtube.com/user/TechGuyWeb) youtube channel, [Scrapinghub](https://blog.scrapinghub.com/) blog and anyone who took some of their precious time to answer questions on stakOverflow. Without you I could not have grasped the concept of scrapy in the time required to write this paper.
+
 ## Closing statement
 
 I am a student and future professional who is keen on learning, If you have any questions, or would like to point out any inaccuracies please email me.
