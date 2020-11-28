@@ -31,11 +31,15 @@ def augmentImages():
 # cli commands inspired by yolo
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--load', nargs='+', type=str, default='/home/henri/Desktop/roboflow/', help='dir path where the .txt and .jpg are located')
-    parser.add_argument('--save', nargs='+', type=str, default='/home/henri/Desktop/roboflow/224.ext/', help='dir path where the .txt and .jpg are located')
+    parser.add_argument('--load', nargs='+', type=str, default='/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData/roboflow/', help='dir path where the .txt and .jpg are located')
+    parser.add_argument('--save', nargs='+', type=str, default='/home/henri/Documents/Lighthouse-lab/Databases/final project db/MNIST-Spicy/flyers/', help='dir path where the .txt and .jpg are located')
     parser.add_argument('--low-img-rand', type=int, default=2, help='lowest number of sample that are procuded per image')
     parser.add_argument('--high-img-rand', type=int, default=5, help='highest number of sample that are procuded per image')
     opt = parser.parse_args()
     print(opt)
     augmentImages()
 # python imageAugmenterPipeline.py 
+
+# if we want to augment data without worrying with bounding boxes
+# extra feature
+# /home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData/full
