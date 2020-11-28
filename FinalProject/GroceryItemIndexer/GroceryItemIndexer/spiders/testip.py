@@ -1,6 +1,6 @@
 import scrapy
 from datetime import datetime
-from ..items import IpTimestamp,
+from ..items import IpTimestamp
 
 def timestampReceival():
     now = datetime.now()

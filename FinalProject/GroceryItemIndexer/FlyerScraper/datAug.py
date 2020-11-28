@@ -1,6 +1,7 @@
 import numpy as np
 from PIL import Image
 from io import StringIO
+import copy
 # plotting libraries 
 import matplotlib.pyplot as plt 
 import matplotlib.image as mpimg
@@ -36,8 +37,10 @@ def saveArrayToImg(url,npArray,info=False):
     image.close()
 
 # box loading/saving and formatting function
-def loadingBBox(fileurl,imageArray,info=True):
+def loadingBBox(fileurl,imageArray,info=True,mode='default'):
     """
+    Of not if you select the yolo mode you will not be able to use image augmentation
+    mode = ['default','yolo']
     Assuming the data is in this format (yolo)
     <object-class> <x> <y> <width> <height> 
     [1.      , 0.250126, 0.29366 , 0.471062, 0.410735]
@@ -51,20 +54,33 @@ def loadingBBox(fileurl,imageArray,info=True):
     width = imageArray.shape[1] #width or x axis
     height = imageArray.shape[0] #height of y axis
     boxData = np.loadtxt(fileurl)
-    
+    # we want to load the box data but keep the format
+    if mode == 'yolo':
+        
+        boxData[:,1:2:] = boxData[:,1:2:] * width
+        boxData[:,2:3:] = boxData[:,2:3:] * height
+        boxData[:,3:4:] = boxData[:,3:4:] * width 
+        boxData[:,4:5:] = boxData[:,4:5:] * height
+        if info:
+            print(f'using the {mode} mode. The data is kept in yolo format but scaled') 
+            print(f'before transform\n<object-class>\t<x>\t<y>\t<width>\t<height> (unscaled):\n{np.loadtxt(fileurl)}\nafter transform\n<object-class>\t<x>\t<y>\t<width>\t<height> (scaled):\n{boxData}')
+        return boxData
+    # we want to load the box data in the <object-class> <x1> <y1> <x2> <y2> format
     x1 = boxData[:,1:2:] * width - (boxData[:,3:4:] * width / 2)
     y1 = boxData[:,2:3:] * height - (boxData[:,4:5:] * height / 2)
     x2 = boxData[:,3:4:] * width + x1
     y2 = boxData[:,4:5:] * height + y1
     scaledtransformed = np.column_stack([boxData[:,0:1:],x1,y1,x2,y2])
     if info:
+        print(f'using the {mode} mode so the data is converted')
         print(f'\nimage width: {width} and height {height}')
-        print(f'before transform <object-class> <x> <y> <width> <height>:\n{boxData}\n after transform <object-class> <x1> <y1> <x2> <y2>:\n{scaledtransformed}')
+        print(f'before transform\n<object-class>\t<x>\t<y>\t<width>\t<height>:\n{boxData}\n after transform\n<object-class>\t<x1>\t<y1>\t<x2>\t<y2>:\n{scaledtransformed}')
 
     return scaledtransformed
 
-def saveBBox(fileurl,boxData,imageArray,info=True):
+def saveBBox(fileurl,boxData,imageArray,info=True,mode='default'):
     """
+    mode = ['default','yolo']
     Assuming the data is in this format (yolo)
     <object-class> <x1> <y1> <x2> <y2> 
     the fucntion will return the following format
@@ -75,20 +91,42 @@ def saveBBox(fileurl,boxData,imageArray,info=True):
     # width/height of the transfomer image
     width = imageArray.shape[1] #width or x axis
     height = imageArray.shape[0] #height of y axis
+    # converting from <object-class> <x1> <y1> <x2> <y2>
+    if mode == 'default':
 
-    x_pos = boxData[:,1:2:] / width - (( boxData[:,1:2:] - boxData[:,3:4:]) / width / 2)
-    y_pos = boxData[:,2:3:] / height - ((boxData[:,2:3:] - boxData[:,4:5:]) / height /2)
-    # the original repo had an error there
-    x_size = (boxData[:,3:4:] - boxData[:,1:2:]) / width 
-    y_size = (boxData[:,4:5:] - boxData[:,2:3:]) / height
-    scaledtransformed  = np.column_stack([boxData[:,0:1:],x_pos,y_pos,x_size,y_size])
+        x_pos = boxData[:,1:2:] / width - (( boxData[:,1:2:] - boxData[:,3:4:]) / width / 2)
+        y_pos = boxData[:,2:3:] / height - ((boxData[:,2:3:] - boxData[:,4:5:]) / height /2)
+        # the original repo had an error there
+        x_size = (boxData[:,3:4:] - boxData[:,1:2:]) / width 
+        y_size = (boxData[:,4:5:] - boxData[:,2:3:]) / height
+        scaledtransformed  = np.column_stack([boxData[:,0:1:],x_pos,y_pos,x_size,y_size])
 
-    # normally we 
-    if info:
-        print(f'\nimage width: {width} and height {height}')
-        print(f'before transform\n<object-class> <x1> <y1> <x2> <y2>:\n{boxData} after transform <object-class> <x> <y> <width> <height>:\n{scaledtransformed}')
-    
-    np.savetxt(fileurl, scaledtransformed,fmt='%f', delimiter=' ')
+        # normally we 
+        if info:
+            print(f'\nimage width: {width} and height {height}')
+            print(f'before transform\n<object-class>\t<x1>\t<y1>\t<x2>\t<y2>:\n{boxData} after transform <object-class>\t<x>\t<y>\t<width>\t<height>:\n{scaledtransformed}')
+        
+        np.savetxt(fileurl, scaledtransformed,fmt='%f', delimiter=' ')
+
+    # need to check that it is wroking
+    elif mode == 'yolo':
+        # new variable assignement for info message. 
+        # Has to do deep copy because later cahnges will overwrite the referenced variable
+        before = copy.deepcopy(boxData)
+        # downscaling of the data
+        boxData[:,1:2:] = boxData[:,1:2:] / width
+        boxData[:,2:3:] = boxData[:,2:3:] / height
+        boxData[:,3:4:] = boxData[:,3:4:] / width 
+        boxData[:,4:5:] = boxData[:,4:5:] / height
+
+        if info:
+            print(f'\nimage width: {width} and height {height}')
+            print(f'before transform\n<object-class>\t<x>\t<y>\t<width>\t<height>\n{before}\n after transform <object-class>\t<x>\t<y>\t<width>\t<height>:\n{boxData}')
+        
+        np.savetxt(fileurl, boxData,fmt='%f', delimiter=' ')
+
+    else:
+        print('error saving')
 
 def showImg(imgArray):
     """
@@ -115,7 +153,7 @@ def augmentedCopiesSingleImage(imgArray,bbox,amount,info=False):
         results[i] = seq(image=imgArray, bounding_boxes=bbox)
     return results
 
-def directoryImgTxtload(mainUrl):
+def directoryImgTxtload(mainUrl,info=False):
     """
     function that takes the directory link and package jpg and txt files into a list.
     Check for mismatch
@@ -129,7 +167,8 @@ def directoryImgTxtload(mainUrl):
     combinedList = list()
     # # the only things that should be in the folder should be jpg and txt
     for i, v in  zip(sortedImgTxt[0::2], sortedImgTxt[1::2]):
-        print(i, v)
+        if info:
+            print(i, v)
         combinedList.append(list([i,v]))
     
         #check for mismatch of files
