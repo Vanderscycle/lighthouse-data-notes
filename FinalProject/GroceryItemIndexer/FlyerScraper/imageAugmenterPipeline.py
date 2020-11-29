@@ -24,8 +24,6 @@ def augmentImages():
         for i in range(len(augmentedImagesList)):
             jpgNewName, txtNewName = fileNameAugGen(i,directory[f])
             saveArrayToImg(testUrl + jpgNewName, augmentedImagesList[i][0],info=False)
-            #! error bellow
-            #url,
             saveBBox(testUrl + txtNewName, bboxNPPacker(augmentedImagesList[i][1]), augmentedImagesList[i][0], info=False)
 
 # cli commands inspired by yolo

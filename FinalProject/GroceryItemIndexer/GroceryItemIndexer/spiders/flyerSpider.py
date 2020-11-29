@@ -16,7 +16,7 @@ class flyerSpider(scrapy.Spider):
     'scrapy.pipelines.images.FilesPipeline': 1,
     'GroceryItemIndexer.pipelines.FlyerPipeline': 500,
         },
-        'FILES_STORE' :"/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData",
+        'FILES_STORE' :"/home/henri/Documents/Lighthouse-lab/Databases/final project db/flyerScrapedData/full",
         # Scrapy filters duplicate requests by default, otherwise it 
         'DUPEFILTER_CLASS' : 'scrapy.dupefilters.BaseDupeFilter'
     }
