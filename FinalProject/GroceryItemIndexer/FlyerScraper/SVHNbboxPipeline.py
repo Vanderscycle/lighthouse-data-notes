@@ -2,9 +2,7 @@ import h5py
 import os
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 from datAug import *
-
 
 def properYOLOFormat(bbox,info=False):
     """

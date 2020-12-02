@@ -2,6 +2,7 @@ import numpy as np
 from PIL import Image
 from io import StringIO
 import copy
+from tqdm import tqdm
 # plotting libraries 
 import matplotlib.pyplot as plt 
 import matplotlib.image as mpimg
@@ -165,7 +166,7 @@ def directoryImgTxtload(mainUrl,info=False):
     # return sortedImgTxt
     # #it = iter(sortedImgTxt)
     combinedList = list()
-    # # the only things that should be in the folder should be jpg and txt
+    # # the only things that should be in the folder should be (jpg/) and txt
     for i, v in  zip(sortedImgTxt[0::2], sortedImgTxt[1::2]):
         if info:
             print(i, v)
