@@ -147,7 +147,7 @@ I highly recommend that you refresh your memory on [regex](https://regexone.com/
 Now that we have successfully extracted all the information in the shell, we are ready to write the script.
 ## Writing our first spider
 Now that we are familiar with the server's response, we are ready to write out the script. We only need two things for that: a class and the parse method to process the spider's response.
-```
+```python
 import scrapy
 import re
 
@@ -200,7 +200,7 @@ Since our goal is to crawl an entire website without defining every single page'
 I want to remind you that one of the field, we tried to save, comic number, is also the addition to the base URL that allows us to access the next page. Whether you wish to start at comic 1 to the latest or vice versa is up to you.
 
 
-```
+```python
         next_page = response.css('#middleContainer ul li a::attr(href)')[1].get()
         nextPageRegex = r'(\d+)'
         match = re.search(nextPageRegex,next_page)
@@ -211,7 +211,7 @@ I want to remind you that one of the field, we tried to save, comic number, is a
             yield scrapy.Request(next_page,callback=self.parse)
 ```
 If you want to scrape the to the end:
-```
+```python
         if next_page is not None:
             next_page = response.urljoin(next_page)
             yield scrapy.Request(next_page,callback=self.parse)
@@ -224,7 +224,7 @@ Scrapy schedules the scrapy.Request object returned by the start_requests method
 So far we wrote our spider in a single script but as you realized this is messy. The general idea is Extracted data -> Temporary containers -> databse
 
 In the items.py file you can add the following fields
-```
+```python
 class XkcdtestspiderItem(scrapy.Item):
     # define the fields for your item here like:
     #name = scrapy.Field()
@@ -234,11 +234,11 @@ class XkcdtestspiderItem(scrapy.Item):
     comicHiddenText = scrapy.Field()
 ```
 Back to our spider we need to import the method
-```
+```python
 from ..items import XkcdtestspiderItem
 ```
 Then we create a class instance and modify the parse method accordingly
-```
+```python
     def parse(self,response):
 
         comic = XkcdtestspiderItem()
@@ -257,7 +257,7 @@ Then we create a class instance and modify the parse method accordingly
 now instead of generating a dictionary, we can yield the class instance comic
 ## Files and images items
 Have you have noted we didn't download the image. Scrapy allows you to download using the file/image pipeline and required field. In the example bellow, we wanted the image but also more information. [Check the documentation](https://docs.scrapy.org/en/0.24/topics/images.html) as it can be finicky, and you may have to create a test spider before integrating into your main spider.
-```
+```python
 class FlyerItem(scrapy.Item):
     store = scrapy.Field()
     flyersDate = scrapy.Field() # the week the flyer is valid for
@@ -275,7 +275,7 @@ class FlyerItem(scrapy.Item):
     timeScraped = scrapy.Field()
 ```
 In our code, we used files even though the file format we will download is an image. I don't know why this worked for me instead of images. You will understand the code below if you read the pipeline section.  
-```
+```python
 class flyerSpider(scrapy.Spider):
     # class variable for crawl command
     name = 'fSpider'
@@ -306,14 +306,14 @@ Typical uses of item pipelines are:
    * storing the scraped item in a database
    * creating a new field based on the data we received
 First step is to uncomment the pipeline in settings
-```
+```python
 ITEM_PIPELINES = {
    'xkcdTestSpider.pipelines.XkcdtestspiderPipeline': 300,
 }
 ```
 The 300 number refers to the pipeline priority, and so if you have multiple pipelines, you can dictate the order. Ensure that any further pipelines created afterward are added in the setting files. 
 When the parse method yields an item, it will, if available, pass it to the pipeline for processing. To confirm that the pipeline receives the desired info, we will write the following code:
-```
+```python
 from itemadapter import ItemAdapter
 
 # you can have multiple classes
@@ -333,7 +333,7 @@ pipeline key: comicHiddenText value: ['Good luck to Democrats in the upcoming Ge
 ```
 If you have multiple spides in a project it may comes to a point where desired pipelines conflict. Instead of creating a new project you can use the custom pipeline
 
-```
+```python
 class flyerSpider(scrapy.Spider):
     # class variable for crawl command
     name = 'fSpider'
@@ -349,7 +349,7 @@ class flyerSpider(scrapy.Spider):
 ```
 ## Advanced spiders writing
 You do not have to write everything in a single method. You can create multiple parsing functions and go through using the callback parameter.
-```
+```python
 
 # e.g.
 def start_requests(self):
@@ -365,7 +365,7 @@ def departmentParser(self):
     scrapy.Request(url={your next url}, callback=self.{nextMethod})
 ```
 If your goal is to scrap for a long duration you may run the risk of getting banned. What you can do it introduce randomness and pause your scraping:
-```
+```python
 import time
     self.logger.info(f'--------long break 5-8 minutes')
     time.sleep(random.randint(5, 8)*60)
@@ -374,7 +374,7 @@ import time
     time.sleep(random.randint(3, 10))
 ```
 Also using randomness in the order we pick URL is also important
-```
+```python
     def randomUrl(self,dictionary):
     """
     Takes a dictionary with{url, nameCat}
@@ -417,7 +417,7 @@ conda install -c anaconda pymongo
 pip install pymongo
 ```
 Ensure that the pipeline is allowed in the setting file and after we need to modify the pipeline file
-```
+```python
 from itemadapter import ItemAdapter
 import pymongo
 
@@ -444,7 +444,7 @@ class XkcdtestspiderPipeline:
         return item
 ```
 Accessing the info in [MongoDB shell](https://stackoverflow.com/questions/24985684/mongodb-show-all-contents-from-all-collections)
-```
+```python
 # start MongoDB
 mongo
 # see what DB are available
@@ -481,28 +481,28 @@ Of note: more logic can be implemented when passing data to the database so that
 Ultimately, unless your express goal is to create a Denial Of Service (DOS) attack,  you do not want your robot to negatively impact the website's performance it is scraping the data from.
 
 First and foremost, obey websites /robots.txt rules
-```
+```python
 # enabled by default
 ROBOTSTXT_OBEY = True
 ```
 Identifying your robot and yourself
-```
+```python
 BOT_NAME = 'xkcdTestSpider'
 USER_AGENT = 'XKCDfansAndCo-MyXKCDCrawler (ILoveXKCD@gmail.com)'
 ```
 Since Scrapy spiders are incredibly fast and their asynchronous capabilites can create stresses you can tune the following parameters manually:
-```
+```python
 # Configure maximum concurrent requests performed by Scrapy (default: 16/max 32)
 CONCURRENT_REQUESTS = 4 
 DOWNLOAD_DELAY = 3 # Default is 0 second
 ```
 Scrapy offers an automatic option through throttling which I do recommend overall instead of doing so manually:
-```
+```python
 # AutoThrottle automatically adjusts the delays between requests according to the current web server load.
 AUTOTHROTTLE_ENABLED = True
 ```
 Programing a spider may require you to ping the same page multiple time as your spider evolves. This process may cause undue stress on the server at best, and, at worst get your IP banned. Enabling the cache saves the response URL content in a temporary file so that you do now have to ping the website when debugging the spider. 
-```
+```python
 HTTPCACHE_ENABLED = True
 ```
 If a website has an API please use it, for it will most likely relieve some headache.
@@ -512,7 +512,7 @@ We are not very polite, but it is still important to be aware of its capabilitie
 
 ### User agents
 As we learned in robots.txt, you can bypass website restrictions by using a different [user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). A user agent is a character string that lets servers and network peers identify the application, operating system, vendor, and version of the requesting user agent. You can do so by modifying the robot user agent in the settings file. You can even trick websites into believing that you are [Google](https://developers.google.com/search/docs/advanced/crawling/overview-google-crawlers?hl=en&visit_id=637420217784273211-1628247958&rd=1).
-```
+```python
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'xkcdTestSpider (+http://www.yourdomain.com)'
 ```
@@ -521,7 +521,7 @@ The other method uses several user agents to trick the website into thinking tha
 pip install scrapy-user-agents
 ```
 Add the following code in the settings file.
-```
+```python
 DOWNLOADER_MIDDLEWARES = {
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 400,
@@ -542,7 +542,7 @@ For our spider, we will be using a different IP address to not get our own IP ad
 pip install scrapy_proxy_pool
 ```
 Add the following lines in the settings file:
-```
+```python
 PROXY_POOL_ENABLED = True
 DOWNLOADER_MIDDLEWARES = {
     'scrapy_proxy_pool.middlewares.ProxyPoolMiddleware': 610,
@@ -553,7 +553,7 @@ Please be aware that using this free proxy method takes significantly longer tha
 
 Here is a quick spider that allows you to check you IP. Of none the IpTimestamp() class in the code is the item instance that I configured in items.py.
 
-```
+```python
 import scrapy
 from datetime import datetime
 #from ..items import IpTimestamp,
@@ -590,7 +590,7 @@ Now, this becomes time-consuming since you need to check for IP before scraping.
 The proxy service that I used for my project had [support for scrapy](https://help.smartproxy.com/docs/how-to-setup-proxy-on-scrapy-proxy-middleware) if you are using a different proxy or VPN check how authentification to the proxy is acquired. 
 
 It is very important to never save your key or identification so use this tutorial for [your environment](https://towardsdatascience.com/how-to-hide-your-api-keys-in-python-fb2e1a61b0a0)
-```
+```python
 DOWNLOADER_MIDDLEWARES = {
     # userAgent change
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
