@@ -1,5 +1,6 @@
 {
-    "python.pythonPath": "/home/henri/miniconda2/envs/pyGameNN/bin/python",
+    "python.pythonPath": "/home/henri/miniconda2/envs/NNScraper/bin/python",
     "python.linting.enabled": true,
-    "jupyter.jupyterServerType": "local"
+    "jupyter.jupyterServerType": "local",
+    "liveServer.settings.multiRootWorkspaceName": "lighthouse-data-notes"
 }
